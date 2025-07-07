@@ -109,13 +109,13 @@ const DetalleSolicitud = (props) => {
 
         }
     }, [props._Tipo, props.solicitudTabla.id_categoria]);
-
+    let solicitudDetalle = props.detalles || [];
     const getAllSolicitudDetalle = async (listaArticulos) => {
         //props.props.setOpenLoadingScreen();
         try {
-           
-            
-            const solicitudDetalle = props.detalles|| [];
+
+
+
             setListSolicitudDetalle(solicitudDetalle);
 
             const enviar = solicitudDetalle.length > 0 &&
@@ -167,7 +167,7 @@ const DetalleSolicitud = (props) => {
 
         try {
             // Si estas dos no cambian, deberías obtenerlas solo una vez en toda la app
-            const [productosResponse, ] = await Promise.all([
+            const [productosResponse,] = await Promise.all([
                 requests.getToken(GET_CAT_PRODUCTOSBY_ID_CATEGORIA + idCategoria),
 
             ]);
@@ -474,6 +474,8 @@ const DetalleSolicitud = (props) => {
             requests.postToken(CREATE_TAB_SOLICITUDES_DETALLE, detalleSolicitud),
             requests.postToken(DELETE_ARCHIVO, deleteFile)
         ]).then(([createSDResponse]) => {
+            solicitudDetalle=createSDResponse.data.data2;
+
             handlecancelar();
             let createSolicitudDetalle = createSDResponse.data.data;
             return handledGuardaFile(createSolicitudDetalle.id);
@@ -644,6 +646,7 @@ const DetalleSolicitud = (props) => {
     };
 
     const handledGuardaFile = async (idSolicitud) => {
+
         const archivos = archivosBase64
             .filter(archivo => archivo.id === 0)
             .map(archivo => ({
