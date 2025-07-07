@@ -474,8 +474,7 @@ const DetalleSolicitud = (props) => {
             requests.postToken(CREATE_TAB_SOLICITUDES_DETALLE, detalleSolicitud),
             requests.postToken(DELETE_ARCHIVO, deleteFile)
         ]).then(([createSDResponse]) => {
-            solicitudDetalle=createSDResponse.data.data2;
-
+            solicitudDetalle = createSDResponse.data.data2;
             handlecancelar();
             let createSolicitudDetalle = createSDResponse.data.data;
             return handledGuardaFile(createSolicitudDetalle.id);
@@ -495,6 +494,7 @@ const DetalleSolicitud = (props) => {
             requests.putToken(UPDATE_TAB_SOLICITUDES_DETALLE + detalleSolicitud.id, detalleSolicitud),
             requests.postToken(DELETE_ARCHIVO, deleteFile)
         ]).then(([editSDResponse, deleteResponse]) => {
+            solicitudDetalle = editSDResponse.data.data2;
             handlecancelar();
             return handledGuardaFile(detalleSolicitud.id);
         }).catch((error) => {
@@ -720,8 +720,8 @@ const DetalleSolicitud = (props) => {
     const eliminarFila = (id) => {
         props.props.setOpenLoadingScreen();
         requests
-            .putToken(DELETE_TAB_SOLICITUDES_DETALLE + id)
-            .then(() => {
+            .putToken(DELETE_TAB_SOLICITUDES_DETALLE + id).then((response) => {
+                solicitudDetalle = response.data.data2;
                 setListSolicitudDetalle((prevDetalles) =>
                     prevDetalles.filter((detalle) => detalle.id !== id)
                 );
