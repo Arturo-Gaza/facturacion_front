@@ -653,8 +653,12 @@ const DetalleSolicitud = (props) => {
                 ...archivo,
                 id_solicitud_detalle: idSolicitud
             }));
+        const data = {
+            'archivos': archivos,
+            'id': props._ticket
+        }
         await requests
-            .postToken(CREATE_ARCHIVO, archivos) //### ** 
+            .postToken(CREATE_ARCHIVO, data) //### ** 
             .then((response) => {
             })
             .catch((error) => {
