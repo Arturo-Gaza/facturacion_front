@@ -660,6 +660,7 @@ const DetalleSolicitud = (props) => {
         await requests
             .postToken(CREATE_ARCHIVO, data) //### ** 
             .then((response) => {
+                solicitudDetalle = response.data.data2;
             })
             .catch((error) => {
                 error.response.data.errors.forEach(element => {  //forEach Ya quedo
