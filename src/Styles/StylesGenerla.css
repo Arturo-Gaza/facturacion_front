@@ -1,0 +1,361 @@
+/* //:::::::: PALETA DE COLORES :::::::::::::::::::: */
+.color-1 {
+  background-color: #004080 !important;
+}
+
+.color-2 {
+  background-color: #0066CC !important;
+}
+
+.color-3 {
+  background-color: #2AD5AA !important;
+}
+
+.color-4 {
+  background-color: #2AD5AA !important;
+}
+
+.color-5 {
+  background-color: #F37433 !important;
+}
+
+.color-6 {
+  background-color: #212121 !important;
+}
+
+.color-7 {
+  background-color: #6F6F6B !important;
+}
+
+.color-8 {
+  background-color: #FFFFFF !important;
+}
+
+.color-8 {
+  background-color: #19B600 !important;
+}
+
+.color-9 {
+  background-color: #FF0000 !important;
+}
+
+/* //:::::::: TEXTLABEL :::::::::::::::::::: */
+.textLabel1 {
+  color: black !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  font-family: Arial !important;
+}
+
+.textLabel2 {
+  color: black !important;
+  font-size: 14px !important;
+  font-family: Arial !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.textLabel3 {
+  color: black !important;
+  font-size: 14px !important;
+  font-family: Arial !important;
+}
+
+.textLabel4 {
+  color: black !important;
+  font-size: 15px !important;
+  font-family: Arial !important;
+}
+
+.textLabel9 {
+  color: #0066CC;
+  /* azul */
+  cursor: pointer;
+}
+
+.textLabel5 {
+  color: red !important;
+  font-size: 15px !important;
+  font-family: Arial !important;
+}
+
+/* //:::::::: BOTONES :::::::::::::::::::: */
+.btn-aceptarLogin {
+  border-radius: 50px !important;
+  width: 100% !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 16 !important;
+  padding: 6px 12px !important;
+  line-height: 1.5 !important;
+  background-color: #0066CC !important;
+  border: 1px solid #0066CC !important;
+}
+
+.btn-cancelarLogin {
+  border-radius: 50px !important;
+  width: 100% !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  color: #0066CC !important;
+  font-size: 16 !important;
+  padding: 6px 12px !important;
+  line-height: 1.5 !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid #0066CC !important;
+  background-color: rgba(255, 255, 255, 0.80) !important;
+}
+
+.btn-cancelar {
+  border-radius: 90px !important;
+  min-width: 100px !important;
+  max-width: 100% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border: 1px solid red !important;
+  background-color: red !important;
+}
+
+.btn-cancelarConteo {
+  border-radius: 50px !important;
+  width: 75% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid red !important;
+  background-color: red !important;
+}
+
+
+.btn-PausarConteo {
+  border-radius: 50px !important;
+  width: 75% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid rgb(233, 153, 6) !important;
+  background-color: rgb(233, 153, 6) !important;
+}
+
+.btn-CerrarConteo {
+  border-radius: 50px !important;
+  width: 75% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid rgb(44, 206, 3) !important;
+  background-color: rgb(44, 206, 3) !important;
+}
+
+.btn-aceptar {
+  border-radius: 90px !important;
+  min-width: 100px !important;
+  max-width: 100% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border: 1px solid #004080 !important;
+  background-color: #0363c4 !important;
+}
+
+.btn-aceptar-disabled {
+  border-radius: 90px !important;
+  min-width: 100px !important;
+  max-width: 100% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border: 1px solid #6F6F6B !important;
+  background-color: #6F6F6B !important;
+}
+
+.btn-aceptar1 {
+  border-radius: 50px !important;
+  width: 75% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid #004080 !important;
+  background-color: #0363c4 !important;
+}
+
+
+.btn-aceptar25 {
+  border-radius: 50px !important;
+  width: 25% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid #004080 !important;
+  background-color: #0363c4 !important;
+}
+
+.btn-aceptar10 {
+  border-radius: 50px !important;
+  width: 15% !important;
+  box-shadow: none !important;
+  font-family: Arial !important;
+  text-transform: none !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  /* border: 1px solid rgba(255, 255, 255, 0.80) !important; */
+  border: 1px solid #004080 !important;
+  background-color: #0363c4 !important;
+}
+
+
+
+
+/* //:::::::: ICONOS :::::::::::::::::::: */
+.cerrar {
+  position: absolute;
+  margin-top: -2px;
+}
+
+.containerCerrar {
+  justify-content: flex-end !important;
+  margin-top: 0px !important;
+}
+
+/* //:::::::: MARGIN :::::::::::::::::::: */
+.marginComponets {
+  margin-top: 10px !important;
+}
+
+/* //:::::::: CHECKBOX :::::::::::::::::::: */
+.ckBox1 {
+  background-color: transparent !important;
+  height: 30px;
+  width: 30px;
+}
+
+/* //:::::::: inputText :::::::::::::::::::: */
+.inputTextSize100 {
+  background: white;
+  border: 'none';
+  border-radius: 10px !important;
+  width: 100% !important;
+}
+
+.inputTextSize100disabled {
+  background: rgb(230, 230, 230);
+  border: 'none';
+  border-radius: 1px !important;
+  width: 100% !important;
+}
+
+.label_Quest_Validaciones {
+  float: left;
+  color: red;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.inputTextSize75 {
+  background: white;
+  border: 'none';
+  border-radius: 10px !important;
+  width: 75% !important;
+}
+
+.inputTextSize75disabled {
+  background: rgb(230, 230, 230);
+  border: 'none';
+  width: 75% !important;
+  text-transform: uppercase;
+}
+
+.inputTextSize50 {
+  background: white;
+  border: 'none';
+  border-radius: 10px !important;
+  width: 50% !important;
+}
+
+.inputTextSize25 {
+  background: white;
+  border: 'none';
+  border-radius: 10px !important;
+  width: 25% !important;
+}
+
+/* //:::::::: inputSelect :::::::::::::::::::: */
+.inputSelectSize100 {
+  background: white;
+  border: 'none';
+  /* border-radius: 10px !important; */
+  width: 100% !important;
+
+}
+
+.inputSelectSize75 {
+  background: white;
+  border: 'none';
+  /* border-radius: 10px !important; */
+  width: 75% !important;
+
+}
+
+.inputSelectSize50 {
+  background: white;
+  border: 'none';
+  /* border-radius: 10px !important; */
+  width: 50% !important;
+
+}
+
+.inputSelectSize25 {
+  background: white;
+  border: 'none';
+  /* border-radius: 10px !important; */
+  width: 25% !important;
+
+}
+
+.boxCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
