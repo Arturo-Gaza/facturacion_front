@@ -55,36 +55,38 @@ const AlertDocumentoCotizacion = (props) => {
                         <center>
                             <h2>Cotizaciones</h2>
                         </center>
-                        <TableContainer component={Paper} sx={{ marginTop: 4 }}>
-                            <Table size="small">
-                                <TableHead>
-                                    <StyledTableRow>
-                                        <StyledTableCell align={'center'}><label className='textLabel3'>Nombre Archivo</label></StyledTableCell>
-                                        <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
-                                        <StyledTableCell align={'center'}><label className='textLabel3'>Archivo recomendado</label></StyledTableCell>
-                                        <StyledTableCell align={'center'}><label className='textLabel3'>Justificación  de la recomendación</label></StyledTableCell>
-                                        <StyledTableCell align={'center'}><label className='textLabel3'>Documento</label></StyledTableCell>
-                                    </StyledTableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {[...tablaCotizacion]
-                                        .sort((a, b) => (b.recomendada === true) - (a.recomendada === true))
-                                        .map((row, index) => (
-                                            <StyledTableRow key={row.id}>
-                                                <StyledTableCell align={'center'}><label className='textLabel4'>{row.nombre_cotizacion}</label></StyledTableCell>
-                                                <StyledTableCell align={'center'}><label className='textLabel4'>{ row.created_at}</label></StyledTableCell>
-                                                <StyledTableCell align={'center'}><label className='textLabel4'>{row.recomendada === true ? "Si" : "No"}</label></StyledTableCell>
-                                                <StyledTableCell align={'center'}><label className='textLabel4'>{row.justificacion_general === null ? "Sin Justificación" : row.justificacion_general}</label></StyledTableCell>
-                                                <StyledTableCell align={'center'}>
-                                                    <IconButton size="small" onClick={() => verImagenCotizacion(index, row)}>
-                                                        <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
-                                                    </IconButton>
-                                                </StyledTableCell>
-                                            </StyledTableRow>
-                                        ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
+                        <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+                            <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+                                <Table size="small">
+                                    <TableHead>
+                                        <StyledTableRow>
+                                            <StyledTableCell align={'center'}><label className='textLabel3'>Nombre Archivo</label></StyledTableCell>
+                                            <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
+                                            <StyledTableCell align={'center'}><label className='textLabel3'>Archivo recomendado</label></StyledTableCell>
+                                            <StyledTableCell align={'center'}><label className='textLabel3'>Justificación  de la recomendación</label></StyledTableCell>
+                                            <StyledTableCell align={'center'}><label className='textLabel3'>Documento</label></StyledTableCell>
+                                        </StyledTableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {[...tablaCotizacion]
+                                            .sort((a, b) => (b.recomendada === true) - (a.recomendada === true))
+                                            .map((row, index) => (
+                                                <StyledTableRow key={row.id}>
+                                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.nombre_cotizacion}</label></StyledTableCell>
+                                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
+                                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.recomendada === true ? "Si" : "No"}</label></StyledTableCell>
+                                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.justificacion_general === null ? "Sin Justificación" : row.justificacion_general}</label></StyledTableCell>
+                                                    <StyledTableCell align={'center'}>
+                                                        <IconButton size="small" onClick={() => verImagenCotizacion(index, row)}>
+                                                            <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
+                                                        </IconButton>
+                                                    </StyledTableCell>
+                                                </StyledTableRow>
+                                            ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Box>
                     </Box>)}
                 {step == 1 && (
                     cotizacionSeleccionado && (

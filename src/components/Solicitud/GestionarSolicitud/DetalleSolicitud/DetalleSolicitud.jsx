@@ -1118,17 +1118,15 @@ const DetalleSolicitud = (props) => {
                     }
 
                     {props.estatusCotizacionGlobla == true ? (
-                        <Grid container justifyContent="right" sx={{ paddingRight: 2, margin: 2 }}>
+                        <Grid container justifyContent="right" sx={{ paddingRight: -2, margin: 2 }}>
                             <a href="#" className='textLabel9' onClick={(e) => { e.preventDefault(); handleVerCotizacionGeneral(); }}>
                                 Ver cotización general
                             </a>
                         </Grid>
                     ) : (null)}
-
-
+                </Grid>
+                <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
                     <Table size="small" sx={{
-                        padding: 1,
-                        margin: 1,
                         maxHeight: '200px', // límite de altura
                     }}>
                         <TableHead>
@@ -1191,7 +1189,7 @@ const DetalleSolicitud = (props) => {
                             ))}
                         </TableBody>
                     </Table>
-                </Grid>
+                </Box>
             </Box>
 
             <AlertaDocumento

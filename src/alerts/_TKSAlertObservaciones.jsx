@@ -310,50 +310,51 @@ const AlertaObservaciones = (props) => {
                 <label className="textLabel1">
                   Total de Registros: {results.length}{" "}
                 </label>
-                <TableContainer component={Paper}>
-                  <Table
-                    sx={{ minWidth: 80, maxHeight: "300px" }}
-                    aria-label="customized table"
-                  >
-                    <TableHead>
-                      <TableRow>
-                        <StyledTableCell align="center" width="50%">
-                          <label className="textLabel3">Observaciones</label>
-                        </StyledTableCell>
-                        <StyledTableCell align="center" width="15%">
-                          <label className="textLabel3">Usuario</label>
-                          <Tooltip title="Ordenar por Abecedario">
-                            <IconButton
-                              onClick={NombreAsc}
-                              style={{ width: "30px", height: "30px" }}
-                            >
-                              <ExpandLessIcon
-                                sx={{ color: "black" }}
-                                style={{ width: "20px", height: "20px" }}
-                              />
-                            </IconButton>
-                            <IconButton
-                              onClick={NombreDesc}
-                              style={{ width: "30px", height: "30px" }}
-                            >
-                              <ExpandMoreIcon
-                                sx={{ color: "black" }}
-                                style={{ width: "20px", height: "20px" }}
-                              />
-                            </IconButton>
-                          </Tooltip>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <label className="textLabel3">Rol</label>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <label className="textLabel3">Nombre completo</label>
-                        </StyledTableCell>
-                        <StyledTableCell align="center">
-                          <label className="textLabel3">Fecha</label>
-                        </StyledTableCell>
+                <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+                  <TableContainer component={Paper}>
+                    <Table
+                      sx={{ minWidth: 80, maxHeight: "300px" }}
+                      aria-label="customized table"
+                    >
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell align="center" width="50%">
+                            <label className="textLabel3">Observaciones</label>
+                          </StyledTableCell>
+                          <StyledTableCell align="center" width="15%">
+                            <label className="textLabel3">Usuario</label>
+                            <Tooltip title="Ordenar por Abecedario">
+                              <IconButton
+                                onClick={NombreAsc}
+                                style={{ width: "30px", height: "30px" }}
+                              >
+                                <ExpandLessIcon
+                                  sx={{ color: "black" }}
+                                  style={{ width: "20px", height: "20px" }}
+                                />
+                              </IconButton>
+                              <IconButton
+                                onClick={NombreDesc}
+                                style={{ width: "30px", height: "30px" }}
+                              >
+                                <ExpandMoreIcon
+                                  sx={{ color: "black" }}
+                                  style={{ width: "20px", height: "20px" }}
+                                />
+                              </IconButton>
+                            </Tooltip>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <label className="textLabel3">Rol</label>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <label className="textLabel3">Nombre completo</label>
+                          </StyledTableCell>
+                          <StyledTableCell align="center">
+                            <label className="textLabel3">Fecha</label>
+                          </StyledTableCell>
 
-                        {/* <StyledTableCell align="center" >
+                          {/* <StyledTableCell align="center" >
                                                     <label className='textLabel3'>Habilitado</label>
                                                     <Tooltip title="Filtrar por Estatus">
                                                         <IconButton onClick={porHabilitado} style={{ width: "30px", height: "30px" }}>
@@ -361,62 +362,62 @@ const AlertaObservaciones = (props) => {
                                                         </IconButton>
                                                     </Tooltip>
                                                 </StyledTableCell> */}
-                      </TableRow>
-                    </TableHead>
+                        </TableRow>
+                      </TableHead>
 
-                    <TableBody>
-                      {results.slice(inicio, fin).map((item) => {
-                        return (
-                          <StyledTableRow
-                            hover
-                            role="checkbox"
-                            //tabIndex2={-1}
-                            key={item.id}
-                            className="font-weight1"
-                          >
-                            <StyledTableCell align="center">
-                              <label className="textLabel4">
-                                {item.observacion}
-                              </label>{" "}
-                              {/* //### ** */}
-                            </StyledTableCell>
+                      <TableBody>
+                        {results.slice(inicio, fin).map((item) => {
+                          return (
+                            <StyledTableRow
+                              hover
+                              role="checkbox"
+                              //tabIndex2={-1}
+                              key={item.id}
+                              className="font-weight1"
+                            >
+                              <StyledTableCell align="center">
+                                <label className="textLabel4">
+                                  {item.observacion}
+                                </label>{" "}
+                                {/* //### ** */}
+                              </StyledTableCell>
 
-                            <StyledTableCell align="center">
-                              <label className="textLabel4">{item.usuario.name}</label>{" "}
-                              {/* //### ** */}
-                            </StyledTableCell>
+                              <StyledTableCell align="center">
+                                <label className="textLabel4">{item.usuario.name}</label>{" "}
+                                {/* //### ** */}
+                              </StyledTableCell>
 
-                            <StyledTableCell align="center">
-                              <label className="textLabel4">
-                                {item.usuario.rol.nombre}
-                              </label>{" "}
-                              {/* //### ** */}
-                            </StyledTableCell>
+                              <StyledTableCell align="center">
+                                <label className="textLabel4">
+                                  {item.usuario.rol.nombre}
+                                </label>{" "}
+                                {/* //### ** */}
+                              </StyledTableCell>
 
-                            <StyledTableCell align="center">
-                              <label className="textLabel4">
-                                {item.usuario.name +
-                                  " " +
-                                  item.usuario.apellidoP +
-                                  " " +
-                                  item.usuario.apellidoM}
-                              </label>{" "}
-                              {/* //### ** */}
-                            </StyledTableCell>
+                              <StyledTableCell align="center">
+                                <label className="textLabel4">
+                                  {item.usuario.name +
+                                    " " +
+                                    item.usuario.apellidoP +
+                                    " " +
+                                    item.usuario.apellidoM}
+                                </label>{" "}
+                                {/* //### ** */}
+                              </StyledTableCell>
 
-                            <StyledTableCell align="center">
-                              <label className="textLabel4">
-                                {item.created_at}
-                              </label>
-                            </StyledTableCell>
+                              <StyledTableCell align="center">
+                                <label className="textLabel4">
+                                  {item.created_at}
+                                </label>
+                              </StyledTableCell>
 
-                            {/* <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                                                             <Checkbox
                                                                 disabled
                                                                 checked={item.habilitado}
                                                             />
                                                         </StyledTableCell> */}
-                            {/* <StyledTableCell align="center">
+                              {/* <StyledTableCell align="center">
                                                             <IconButton
                                                                 aria-label="editar"
                                                                 color="primary"
@@ -427,12 +428,13 @@ const AlertaObservaciones = (props) => {
                                                                 <EditNoteIcon sx={{ color: "#0066CC" }} />
                                                             </IconButton>
                                                         </StyledTableCell> */}
-                          </StyledTableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+                            </StyledTableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
               </center>
               <br></br>
               <center>
@@ -452,7 +454,7 @@ const AlertaObservaciones = (props) => {
                   <Button className="btn-aceptar" onClick={Continuar} variant={"contained"} sx={{ mr: 1 }} >
                     Guardar
                   </Button>
-                  
+
                   <Button onClick={Cancelar} className="btn-cancelar" variant={"contained"}>Salir</Button>
                 </Box>
               </center>

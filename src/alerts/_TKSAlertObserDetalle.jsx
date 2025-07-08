@@ -31,24 +31,26 @@ const AlertObserDetalle = (props) => {
                 <center>
                     <h2>Observaciones</h2>
                 </center>
-                <TableContainer component={Paper} sx={{ marginTop: 4 }}>
-                    <Table size="small">
-                        <TableHead>
-                            <StyledTableRow>
-                                <StyledTableCell align={'center'}><label className='textLabel3'>Observaciones</label></StyledTableCell>
-                                <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
-                            </StyledTableRow>
-                        </TableHead>
-                        <TableBody>
-                            {tablaObservaciones.map((row, i) => (
-                                <StyledTableRow key={row.id}>
-                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.observacion}</label></StyledTableCell>
-                                    <StyledTableCell align={'center'}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
+                <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+                    <TableContainer component={Paper} sx={{ marginTop: 4 }}>
+                        <Table size="small">
+                            <TableHead>
+                                <StyledTableRow>
+                                    <StyledTableCell align={'center'}><label className='textLabel3'>Observaciones</label></StyledTableCell>
+                                    <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
                                 </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {tablaObservaciones.map((row, i) => (
+                                    <StyledTableRow key={row.id}>
+                                        <StyledTableCell align={'center'}><label className='textLabel4'>{row.observacion}</label></StyledTableCell>
+                                        <StyledTableCell align={'center'}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
             </DialogContent>
         </Dialog>
     );

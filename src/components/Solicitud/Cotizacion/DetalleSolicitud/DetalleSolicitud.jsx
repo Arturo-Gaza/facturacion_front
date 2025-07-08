@@ -1057,11 +1057,10 @@ const DetalleSolicitud = (props) => {
                     borderRadius: '4px',
                     padding: 2,
                     margin: 2,
-                    maxHeight: '200px', // límite de altura
-                    overflowY: 'auto',  // scroll vertical interno
+                    maxHeight: '300px', // límite de altura
+                    overflow: 'auto',  // scroll vertical interno
                 }}
             >
-
                 <Table size="small">
                     <TableHead>
                         <StyledTableRow>
@@ -1084,11 +1083,11 @@ const DetalleSolicitud = (props) => {
                             <StyledTableRow key={row.id}>
                                 <StyledTableCell align={'right'}><label className='textLabel4'>{row.producto.clave_producto}</label></StyledTableCell>
                                 <StyledTableCell align={'center'}><label className='textLabel4'>{row.descripcion_producto}</label></StyledTableCell>
-                                <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'> {typeof row.descripcion === 'string'? row.descripcion.length > 300 ? row.descripcion.substring(0, 300) + '...': row.descripcion: ''}</label></Box></StyledTableCell>
+                                <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'> {typeof row.descripcion === 'string' ? row.descripcion.length > 300 ? row.descripcion.substring(0, 300) + '...' : row.descripcion : ''}</label></Box></StyledTableCell>
                                 <StyledTableCell align={'right'}><label className='textLabel4'>{row.cantidad}</label></StyledTableCell>
                                 <StyledTableCell align={'center'}><label className='textLabel4'>{row.marca}</label></StyledTableCell>
                                 <StyledTableCell align={'center'}><label className='textLabel4'>{row.modelo}</label></StyledTableCell>
-                                <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'>{typeof row.observacion === 'string'? row.observacion.length > 300 ? row.observacion.substring(0, 300) + '...': row.observacion: ''}</label></Box></StyledTableCell>
+                                <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'>{typeof row.observacion === 'string' ? row.observacion.length > 300 ? row.observacion.substring(0, 300) + '...' : row.observacion : ''}</label></Box></StyledTableCell>
                                 <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
                                 {cotizacionGeneral != true ? (
                                     <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.cotizado == null ? 'Sin revisión' : row.cotizado ? 'Cotizado' : 'Con observaciones'}</label></StyledTableCell>

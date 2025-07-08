@@ -595,124 +595,125 @@ const ConsolaSolicitud = (props) => {
             </Grid>
 
             <label className='textLabel1'>Total de Registros: {results.length} </label>
-            <Table sx={{ minWidth: 80, maxHeight: '300px' }} aria-label="customized table">
-                <TableHead>
-                    <StyledTableRow>
-                        {columnas.map((col) => (
-                            <StyledTableCell key={col.key} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
-                                {col.visible === true ? (
-                                    col.key === "updated_at" ? (
-                                        <>
-                                            <label className="textLabel3">{col.label}</label>
-                                            <IconButton onClick={OrdenarFechaAsc} style={{ width: "10px", height: "30px" }}>
-                                                <ExpandLessIcon sx={{ color: "black" }} style={{ width: "20px", height: "20px" }} />
-                                            </IconButton>
-                                            <IconButton onClick={OrdenarFechaDesc} style={{ width: "10px", height: "30px" }}>
-                                                <ExpandMoreIcon sx={{ color: "black" }} style={{ width: "20px", height: "20px" }} />
-                                            </IconButton>
-                                        </>
-                                    ) : (
-                                        <label className="textLabel3">{col.label}</label>
-                                    )
-                                ) : null}
-                            </StyledTableCell>
-                        ))}
-                    </StyledTableRow>
-                </TableHead>
-                <TableBody>
-                    {results.map((fila, i) => (
-                        <StyledTableRow key={fila.key}>
+            <Box sx={{overflowX: 'auto' }}>
+                <Table sx={{ minWidth: 80 }} aria-label="customized table">
+                    <TableHead>
+                        <StyledTableRow>
                             {columnas.map((col) => (
-                                <StyledTableCell key={`${fila.key}-${col.key}`} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
-                                    {
-
-                                        col.key === "descripcion" && col.visible === true ? (
-                                            <Box sx={{ textAlign: 'justify' }}>
-                                                <label className='textLabel4'>
-                                                    {typeof fila.descripcion === 'string' ? fila.descripcion.length > 300 ? fila.descripcion.substring(0, 300) + '...' : fila.descripcion : ''}
-                                                </label>
-                                            </Box>
-                                        ) : col.key === "descripcion_estatus_solicitud" && col.visible === true ? (
-                                            <label className='textLabel4'>
-                                                {fila.id_estatus_solicitud === 3 || fila.id_estatus_solicitud === 4 ?
-                                                    (fila.descripcion_estatus_solicitud + " por: " + fila.usuario_ultima_actualizacion) :
-                                                    (fila.descripcion_estatus_solicitud)
-                                                }
-
-                                            </label>
-                                        ) : col.key === "user_asignacion" && col.visible === true ? (
-                                            <label className='textLabel4'>
-                                                {
-                                                    fila[col.key] === null ? "Sin asignar" : typeof fila[col.key] === 'object' ?
-                                                        (fila[col.key].name || fila[col.key].nombre || "Usuario sin nombre") : fila[col.key]
-                                                }
-                                            </label>
-                                        ) : col.key === "updated_at" || col.key === "created_at" && col.visible === true ? (
-                                            <label className='textLabel4'>
-                                                {fila[col.key]}
-                                            </label>
-                                        ) : col.key === "Acciones" && col.visible === true ? (
+                                <StyledTableCell key={col.key} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
+                                    {col.visible === true ? (
+                                        col.key === "updated_at" ? (
                                             <>
-                                                {[1, 4].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Editar Solicitud">
-                                                        <IconButton
-                                                            disabled={[2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud)}
-                                                            color="primary"
-                                                            onClick={() => Editar(fila)}
-                                                        >
-                                                            <EditNoteIcon sx={{ color: [2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                <label className="textLabel3">{col.label}</label>
+                                                <IconButton onClick={OrdenarFechaAsc} style={{ width: "10px", height: "30px" }}>
+                                                    <ExpandLessIcon sx={{ color: "black" }} style={{ width: "20px", height: "20px" }} />
+                                                </IconButton>
+                                                <IconButton onClick={OrdenarFechaDesc} style={{ width: "10px", height: "30px" }}>
+                                                    <ExpandMoreIcon sx={{ color: "black" }} style={{ width: "20px", height: "20px" }} />
+                                                </IconButton>
+                                            </>
+                                        ) : (
+                                            <label className="textLabel3">{col.label}</label>
+                                        )
+                                    ) : null}
+                                </StyledTableCell>
+                            ))}
+                        </StyledTableRow>
+                    </TableHead>
+                    <TableBody>
+                        {results.map((fila, i) => (
+                            <StyledTableRow key={fila.key}>
+                                {columnas.map((col) => (
+                                    <StyledTableCell key={`${fila.key}-${col.key}`} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
+                                        {
 
-                                                {[1, 2].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Asignación de Solicitud">
-                                                        <IconButton
-                                                            disabled={[3, 4].includes(fila.id_estatus_solicitud)}
-                                                            color="primary"
-                                                            onClick={() => Asignacion(fila)}
-                                                        >
-                                                            <AssignmentIndIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                            col.key === "descripcion" && col.visible === true ? (
+                                                <Box sx={{ textAlign: 'justify' }}>
+                                                    <label className='textLabel4'>
+                                                        {typeof fila.descripcion === 'string' ? fila.descripcion.length > 300 ? fila.descripcion.substring(0, 300) + '...' : fila.descripcion : ''}
+                                                    </label>
+                                                </Box>
+                                            ) : col.key === "descripcion_estatus_solicitud" && col.visible === true ? (
+                                                <label className='textLabel4'>
+                                                    {fila.id_estatus_solicitud === 3 || fila.id_estatus_solicitud === 4 ?
+                                                        (fila.descripcion_estatus_solicitud + " por: " + fila.usuario_ultima_actualizacion) :
+                                                        (fila.descripcion_estatus_solicitud)
+                                                    }
 
-                                                {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Visualizar Solicitud">
-                                                        <IconButton
-                                                            color="primary"
-                                                            onClick={() => Visualizar(fila)}
-                                                        >
-                                                            <FindInPageIcon sx={{ color: "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                </label>
+                                            ) : col.key === "user_asignacion" && col.visible === true ? (
+                                                <label className='textLabel4'>
+                                                    {
+                                                        fila[col.key] === null ? "Sin asignar" : typeof fila[col.key] === 'object' ?
+                                                            (fila[col.key].name || fila[col.key].nombre || "Usuario sin nombre") : fila[col.key]
+                                                    }
+                                                </label>
+                                            ) : col.key === "updated_at" || col.key === "created_at" && col.visible === true ? (
+                                                <label className='textLabel4'>
+                                                    {fila[col.key]}
+                                                </label>
+                                            ) : col.key === "Acciones" && col.visible === true ? (
+                                                <>
+                                                    {[1, 4].includes(parseInt(user.idRol, 10)) && (
+                                                        <Tooltip title="Editar Solicitud">
+                                                            <IconButton
+                                                                disabled={[2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud)}
+                                                                color="primary"
+                                                                onClick={() => Editar(fila)}
+                                                            >
+                                                                <EditNoteIcon sx={{ color: [2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
 
-                                                {[1, 2, 3].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Cotizar Solicitud">
-                                                        <IconButton
-                                                            disabled={[2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud)}
-                                                            color="primary"
-                                                            onClick={() => Cotizar(fila)}
-                                                        >
-                                                            <AnalyticsIcon sx={{ color: [2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                    {[1, 2].includes(parseInt(user.idRol, 10)) && (
+                                                        <Tooltip title="Asignación de Solicitud">
+                                                            <IconButton
+                                                                disabled={[3, 4].includes(fila.id_estatus_solicitud)}
+                                                                color="primary"
+                                                                onClick={() => Asignacion(fila)}
+                                                            >
+                                                                <AssignmentIndIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
 
-                                                {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Cancelar Solicitud">
-                                                        <IconButton
-                                                            disabled={[3, 4].includes(fila.id_estatus_solicitud)}
-                                                            color="primary"
-                                                            onClick={() => Eliminar(fila)}
-                                                        >
-                                                            <BlockIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "red" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )}
+                                                    {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
+                                                        <Tooltip title="Visualizar Solicitud">
+                                                            <IconButton
+                                                                color="primary"
+                                                                onClick={() => Visualizar(fila)}
+                                                            >
+                                                                <FindInPageIcon sx={{ color: "#0066CC" }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
 
-                                                {/* {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
+                                                    {[1, 2, 3].includes(parseInt(user.idRol, 10)) && (
+                                                        <Tooltip title="Cotizar Solicitud">
+                                                            <IconButton
+                                                                disabled={[2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud)}
+                                                                color="primary"
+                                                                onClick={() => Cotizar(fila)}
+                                                            >
+                                                                <AnalyticsIcon sx={{ color: [2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
+
+                                                    {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
+                                                        <Tooltip title="Cancelar Solicitud">
+                                                            <IconButton
+                                                                disabled={[3, 4].includes(fila.id_estatus_solicitud)}
+                                                                color="primary"
+                                                                onClick={() => Eliminar(fila)}
+                                                            >
+                                                                <BlockIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "red" }} />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    )}
+
+                                                    {/* {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
                                                     <Tooltip title="Concluido">
                                                         <IconButton
                                                             disabled={[1, 2, 3, 4, 5, 6, 7, 8].includes(fila.id_estatus_solicitud)}
@@ -723,59 +724,60 @@ const ConsolaSolicitud = (props) => {
                                                         </IconButton>
                                                     </Tooltip>
                                                 )} */}
-                                                {/* {parseInt(user.idRol, 10) === 4 && fila.id_estatus_solicitud === 1  && ( */}
-                                                {[4].includes(parseInt(user.idRol, 10)) && (
-                                                    [1, 5].includes(fila.id_estatus_solicitud) && (
-                                                        <Tooltip title="Enviar Solicitud">
-                                                            <IconButton
-                                                                color="primary"
-                                                                onClick={() => {
-                                                                    setSolicitudSeleccionada({ id: fila.id, estatus: fila.id_estatus_solicitud });
-                                                                    setOpenDialog(true);
+                                                    {/* {parseInt(user.idRol, 10) === 4 && fila.id_estatus_solicitud === 1  && ( */}
+                                                    {[4].includes(parseInt(user.idRol, 10)) && (
+                                                        [1, 5].includes(fila.id_estatus_solicitud) && (
+                                                            <Tooltip title="Enviar Solicitud">
+                                                                <IconButton
+                                                                    color="primary"
+                                                                    onClick={() => {
+                                                                        setSolicitudSeleccionada({ id: fila.id, estatus: fila.id_estatus_solicitud });
+                                                                        setOpenDialog(true);
+                                                                    }}
+                                                                >
+                                                                    <SendIcon sx={{ color: "#0066CC" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        ))}
+
+                                                </>
+                                            ) : col.key === "Observaciones" && col.visible === true ? (
+                                                (() => {
+                                                    const idRol = parseInt(user.idRol, 10);
+                                                    const estatus = parseInt(fila.id_estatus_solicitud, 10);
+
+                                                    const deshabilitar =
+                                                        [4, 9].includes(estatus) || // Concluida o Cotizada: nadie puede
+                                                        (estatus === 5 && idRol !== 4); // Requiere información: solo el rol 4
+
+                                                    return (
+                                                        <IconButton
+                                                            aria-label="editar"
+                                                            color="primary"
+                                                            onClick={() => Observaciones(fila)}
+                                                            disabled={deshabilitar}
+                                                        >
+                                                            <EditNoteIcon
+                                                                sx={{
+                                                                    color: deshabilitar ? "#A0A0A0" : "#0066CC"
                                                                 }}
-                                                            >
-                                                                <SendIcon sx={{ color: "#0066CC" }} />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    ))}
-
-                                            </>
-                                        ) : col.key === "Observaciones" && col.visible === true ? (
-                                            (() => {
-                                                const idRol = parseInt(user.idRol, 10);
-                                                const estatus = parseInt(fila.id_estatus_solicitud, 10);
-
-                                                const deshabilitar =
-                                                    [4, 9].includes(estatus) || // Concluida o Cotizada: nadie puede
-                                                    (estatus === 5 && idRol !== 4); // Requiere información: solo el rol 4
-
-                                                return (
-                                                    <IconButton
-                                                        aria-label="editar"
-                                                        color="primary"
-                                                        onClick={() => Observaciones(fila)}
-                                                        disabled={deshabilitar}
-                                                    >
-                                                        <EditNoteIcon
-                                                            sx={{
-                                                                color: deshabilitar ? "#A0A0A0" : "#0066CC"
-                                                            }}
-                                                        />
-                                                    </IconButton>
-                                                );
-                                            })()
-                                        ) : col.visible === true ? (
-                                            <label className='textLabel4'>
-                                                {fila[col.key]}
-                                            </label>
-                                        ) : (null)
-                                    }
-                                </StyledTableCell>
-                            ))}
-                        </StyledTableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                                            />
+                                                        </IconButton>
+                                                    );
+                                                })()
+                                            ) : col.visible === true ? (
+                                                <label className='textLabel4'>
+                                                    {fila[col.key]}
+                                                </label>
+                                            ) : (null)
+                                        }
+                                    </StyledTableCell>
+                                ))}
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Box>
             <Dialog
                 open={openDialog}
                 onClose={() => setOpenDialog(false)}
