@@ -61,7 +61,7 @@ const ConsolaSolicitud = (props) => {
     const columnas = [
         { label: 'Ticket', key: 'id', opcion1: 'left', visible: true },
         { label: 'Usuario', key: 'user_solicitud', opcion1: 'center', visible: true },
-        { label: 'Usuario Asignado', key: 'usuario_asignacion', opcion1: 'center', visible: [1, 2].includes(parseInt(user.idRol, 10)) },
+        { label: 'Usuario Asignado', key: 'user_asignacion', opcion1: 'center', visible: [1, 2].includes(parseInt(user.idRol, 10)) },
         { label: 'Prioridad', key: 'prioridad_valor', opcion1: 'center', visible: true },
         { label: 'Descripción', key: 'descripcion', opcion1: 'center', visible: true },
         { label: 'Categoría', key: 'descripcion_categoria', opcion1: 'center', visible: true },
@@ -640,7 +640,7 @@ const ConsolaSolicitud = (props) => {
                                                 }
 
                                             </label>
-                                        ) : col.key === "usuario_asignacion" && col.visible === true ? (
+                                        ) : col.key === "user_asignacion" && col.visible === true ? (
                                             <label className='textLabel4'>
                                                 {
                                                     fila[col.key] === null ? "Sin asignar" : typeof fila[col.key] === 'object' ?

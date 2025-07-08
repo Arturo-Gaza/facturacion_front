@@ -406,9 +406,7 @@ const AlertaObservaciones = (props) => {
 
                             <StyledTableCell align="center">
                               <label className="textLabel4">
-                                {moment(
-                                  item.created_at.split("/").reverse().join("/")
-                                ).format("YYYY-MM-DD HH:mm:ss")}
+                                {item.created_at}
                               </label>
                             </StyledTableCell>
 

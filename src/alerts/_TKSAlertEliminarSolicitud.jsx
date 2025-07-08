@@ -46,6 +46,7 @@ const AlertaCerrarSolicitud = (props) => {
       .then(() => {
         CambioEstatus(3, props.solicitudItem.id);
         setStep(1);
+        setObservacion("");
       })
       .catch((error) => {
         props.props.props.setMessageSnackBar(
