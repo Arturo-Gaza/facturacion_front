@@ -150,7 +150,7 @@ const AlertCambiarContraseña = (props) => {
   ///////////////////////////
 
   const enviarCorreo = () => {
-    data = {
+    let data = {
       email: email,
     };
     props.props.setOpenLoadingScreen();
@@ -168,7 +168,7 @@ const AlertCambiarContraseña = (props) => {
   };
 
   const enviarCodigo = () => {
-    data = {
+    let data = {
       email: email,
       codigo: codigo,
     };
@@ -193,7 +193,7 @@ const AlertCambiarContraseña = (props) => {
   const cambioContraseña = async () => {
     // Validación básica frontend
 
-    data = {
+    let data = {
       codigo: codigo,
       nuevaPass: nuevaContraseña,
       email: email,
