@@ -569,7 +569,7 @@ const DetalleSolicitud = (props) => {
         const yaExiste = archivosBase64.some(file => file.nombre === archivoSeleccionado.name);
         if (!yaExiste) {
             archivos.forEach((archivo) => {
-                if (archivo.size <= 1024 * 1024) {
+                if (archivo.size <= 1024 * 1024 * 5) {
                     const reader = new FileReader();
                     reader.onload = () => {
                         nuevosArchivos.push({
@@ -584,7 +584,7 @@ const DetalleSolicitud = (props) => {
                     };
                     reader.readAsDataURL(archivo);
                 } else {
-                    props.props.setMessageSnackBar(`"${archivo.name}" excede 1MB y no fue agregado.`, 'warning');
+                    props.props.setMessageSnackBar(`"${archivo.name}" excede 5MB y no fue agregado.`, 'warning');
                 }
             });
         } else {
@@ -648,7 +648,7 @@ const DetalleSolicitud = (props) => {
         const yaExiste = cotizacionBase64.some(file => file.nombre_cotizacion === archivoSeleccionado.name);
         if (!yaExiste) {
             archivos.forEach((archivo) => {
-                if (archivo.size <= 1024 * 1024) {
+                if (archivo.size <= 1024 * 1024 * 5) {
                     const reader = new FileReader();
                     reader.onload = () => {
                         nuevosArchivos.push({
@@ -672,7 +672,7 @@ const DetalleSolicitud = (props) => {
                     };
                     reader.readAsDataURL(archivo);
                 } else {
-                    props.props.setMessageSnackBar(`"${archivo.name}" excede 1MB y no fue agregado.`, 'warning');
+                    props.props.setMessageSnackBar(`"${archivo.name}" excede 5MB y no fue agregado.`, 'warning');
                 }
             });
         } else {
@@ -880,7 +880,7 @@ const DetalleSolicitud = (props) => {
         const yaExiste = cotizacionGeneralBase64.some(file => file.nombre_cotizacion === archivoSeleccionado.name);
         if (!yaExiste) {
             archivos.forEach((archivo) => {
-                if (archivo.size <= 1024 * 1024) {
+                if (archivo.size <= 1024 * 1024 * 5) {
                     const reader = new FileReader();
                     reader.onload = () => {
                         nuevosArchivos.push({
@@ -898,7 +898,7 @@ const DetalleSolicitud = (props) => {
                     };
                     reader.readAsDataURL(archivo);
                 } else {
-                    props.props.setMessageSnackBar(`"${archivo.name}" excede 1MB y no fue agregado.`, 'warning');
+                    props.props.setMessageSnackBar(`"${archivo.name}" excede 5MB y no fue agregado.`, 'warning');
                 }
             });
         } else {
@@ -1360,7 +1360,7 @@ const DetalleSolicitud = (props) => {
                                                 type="file"
                                                 hidden
                                                 multiple
-                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.eml,.msg"
+                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
                                                 onChange={handleCotizar}
                                             />
                                         </Button>
@@ -1492,7 +1492,7 @@ const DetalleSolicitud = (props) => {
                                                 type="file"
                                                 hidden
                                                 multiple
-                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.eml,.msg"
+                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
                                                 onChange={handleCotizarGenaral}
                                             />
                                         </Button>
