@@ -261,9 +261,7 @@ const ConsolaSolicitud = (props) => {
     const [searchFechaAct, setSearchFechaAct] = useState('');
     const [searchDepartamento, setSearchDepartamento] = useState('');
     const [searchUsuario, setSearchusuario] = useState('');
-    let results = Array.isArray(_ListCatalogo)
-        ? [..._ListCatalogo].sort((a, b) => a.id - b.id)
-        : [];
+    let results = _ListCatalogo;
     if (searchTicket) {
         results = results.filter(d =>
             (d.id || '').toString().toLowerCase().startsWith(searchTicket.toLowerCase())
@@ -300,7 +298,7 @@ const ConsolaSolicitud = (props) => {
 
     //::::::::::: FILTROS - ORDENAR POR ASC Y DESC ::::::::::::::::::::
     const [ascFecha, setAscFecha] = useState(false);
-    const [descFecha, setDescFecha] = useState(true);
+    const [descFecha, setDescFecha] = useState(false);
 
     if (ascFecha) {
         results = results.sort((a, b) => {
@@ -623,7 +621,7 @@ const ConsolaSolicitud = (props) => {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {results.map((fila, i) => (
+                        {results.slice(inicio, fin).map((fila, i) => (
                             <StyledTableRow key={fila.key}>
                                 {columnas.map((col) => (
                                     <StyledTableCell key={`${fila.key}-${col.key}`} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
