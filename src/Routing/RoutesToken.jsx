@@ -56,14 +56,14 @@ const RoutesToken = ({ AlltubLogo, setMessageSnackBar, setCloseLoadingScreen, se
   }
 
   const updateExpireTime = () => {
-    const expireTime = Date.now() + 1500000;
+    const expireTime = Date.now() + 900000;
     localStorage.setItem("expireTime", expireTime);
   }
 
   useEffect(() => {
     const interval = setInterval(() => {
       checkForInactivity();
-    }, 1500000);
+    }, 900000);
     return () => clearInterval(interval);
   }, [])
 
