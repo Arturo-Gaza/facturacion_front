@@ -22,7 +22,7 @@ const Afectacion = (props) => {
                 props.props.props.setCloseLoadingScreen()
             })
             .catch((error) => {
-                error.data.errors.forEach(element => {
+                error.response.data.errors.forEach(element => {
                     props.props.props.setMessageSnackBar(element, 'warning');
                 });
             })
@@ -41,7 +41,7 @@ const Afectacion = (props) => {
                 props.props.props.setCloseLoadingScreen()
             })
             .catch((error) => {
-                error.data.errors.forEach(element => {
+                error.response.data.errors.forEach(element => {
                     props.props.props.setMessageSnackBar(element, 'warning');
                 });
             })
@@ -160,12 +160,12 @@ const Afectacion = (props) => {
         props.handleCancel()
     }
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setEstatus(false);
         handleLimpiar();
         setErrPassword({});
         setErrCorreo({});
-        props.handleClose();
+        await props.handleClose();
     }
 
     const Guardar = () => {
@@ -175,10 +175,11 @@ const Afectacion = (props) => {
                 .postToken(CREATE_USER, _ArrayCatalogo)
                 .then((response) => {
                     props.props.props.setMessageSnackBar(response.data.message, 'success');
-                    handleClose();
+                    props.GetListCatalogo();
+                    return handleClose();
                 })
                 .catch((error) => {
-                    error.data.errors.forEach(element => {
+                    error.response.data.errors.forEach(element => {
                         props.props.props.setMessageSnackBar(element, 'warning');
                     });
                 })
@@ -190,14 +191,15 @@ const Afectacion = (props) => {
         }
     }
 
-    const Actualizar = () => {
+    const Actualizar = async () => {
         if (!errPassword.password && !errCorreo.correo) {  // Solo verificas si la contraseña y el correo son válidos
             props.props.props.setOpenLoadingScreen();
-            requests
+            await requests
                 .putToken(UPDATE_USER + props.id, _ArrayCatalogo)
                 .then((response) => {
                     props.props.props.setMessageSnackBar(response.data.message, 'success');
-                    handleClose();
+                    props.GetListCatalogo();
+                    return handleClose();
                 })
                 .catch((error) => {
                     error.response.data.errors.forEach(element => {  //forEach Ya quedo
@@ -228,14 +230,15 @@ const Afectacion = (props) => {
                     password: null,
                     user: response.data.data.user,
                     habilitado: response.data.data.habilitado,
-                    idRol: response.data.data.idRol
+                    idRol: response.data.data.idRol,
+                    id_departamento: response.data.data.id_departamento
                 });//### **
 
                 setChecked(response.data.data.habilitado);
                 props.props.props.setCloseLoadingScreen()
             })
             .catch((error) => {
-                error.data.errors.forEach(element => {
+                error.response.data.errors.forEach(element => {
                     props.props.props.setMessageSnackBar(element, 'warning');
                 });
             })
@@ -247,7 +250,6 @@ const Afectacion = (props) => {
     const [errorsCAT, setErrorsCAT] = useState({});
     const handleSubmitValidado = (e) => {
         e.preventDefault();
-        props.props.props.setOpenLoadingScreen();
         Usuarios(_ArrayCatalogo, props.id).then((resp) => {
             setErrorsCAT(resp);
 
@@ -272,7 +274,6 @@ const Afectacion = (props) => {
                 props.props.props.setMessageSnackBar('Ingrese todos los datos', 'warning');
             }
 
-            props.props.props.setCloseLoadingScreen();
         });
     };
 
@@ -530,19 +531,19 @@ const Afectacion = (props) => {
                     </Grid>
                 </Grid>
 
-
-                {/* <Grid container className='marginComponets'>
-                    <label className='textLabel2'>Habilitado</label>
-                    <Checkbox
-                        className="ckBox1"
-                        id="habilitado"
-                        name="habilitado"
-                        checked={_checked}
-                        onChange={handleHabilitado}
-                        value={_checked}
-                    ></Checkbox>
-                </Grid> */}
-
+                {props.id == null ? (null) : (
+                    <Grid container className='marginComponets'>
+                        <label className='textLabel2'>Habilitado</label>
+                        <Checkbox
+                            className="ckBox1"
+                            id="habilitado"
+                            name="habilitado"
+                            checked={_checked}
+                            onChange={handleHabilitado}
+                            value={_checked}
+                        ></Checkbox>
+                    </Grid>
+                )}
                 <center>
                     <Grid container sx={{ marginTop: 3 }}>
                         <Grid item xs={12} sm={6} md={6}>

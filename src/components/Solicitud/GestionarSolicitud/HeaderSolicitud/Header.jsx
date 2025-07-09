@@ -28,7 +28,9 @@ const HeaderSolicitud = (props) => {
     //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     const location = useLocation();
     const valorDesdeNavegacion = location.state?.habilitarPantalla || 0;
+    const valorEditar = location.state?.habilitadoEditar || 0;
     const [habilitarPantalla, sethabilitarPantalla] = useState(valorDesdeNavegacion);
+    const [habilitadoEditar, setHabilitadoEditar] = useState(valorEditar);
 
     const valoridDep = location.state?.idDepartamentoUsuarioSoli || 0;
 
@@ -143,7 +145,7 @@ const HeaderSolicitud = (props) => {
     const GetByID = async (id, idDepa) => {
         try {
 
-            const [categoriaResponse, tipoResponse, response,unidadM,gpoF] = await Promise.all([
+            const [categoriaResponse, tipoResponse, response, unidadM, gpoF] = await Promise.all([
                 requests.getToken(GET_CATEGORIA_ID_DEPARTAMENTO + idDepa),
                 requests.getToken(GET_TIPO_ID_DEPARTAMENTO + idDepa),
                 requests.getToken(GET_TAB_SOLICITUDES_BY_ID + id),
@@ -196,13 +198,13 @@ const HeaderSolicitud = (props) => {
             props.setMessageSnackBar(error.message || 'Error al obtener solicitud', 'warning');
         }
     };
-      const GetByIDSinTicket = async ( idDepa) => {
+    const GetByIDSinTicket = async (idDepa) => {
         try {
 
-            const [categoriaResponse, tipoResponse,unidadM,gpoF] = await Promise.all([
+            const [categoriaResponse, tipoResponse, unidadM, gpoF] = await Promise.all([
                 requests.getToken(GET_CATEGORIA_ID_DEPARTAMENTO + idDepa),
                 requests.getToken(GET_TIPO_ID_DEPARTAMENTO + idDepa),
-               
+
                 requests.getToken(GET_LIST_CAT_UNIDAD_MEDIDA),
                 requests.getToken(GET_LIST_CAT_GRUPO_FAMILIA)
             ]);
@@ -212,11 +214,11 @@ const HeaderSolicitud = (props) => {
 
             if (categoria.length > 0) setListOptions1(categoria);
             if (tipo.length > 0) setListOptions2(tipo);
- 
+
             setUnidadesMedida(unidadM.data.data)
             setGpoFamilia(gpoF.data.data)
 
-   
+
 
         } catch (error) {
             props.setMessageSnackBar(error.message || 'Error al obtener solicitud', 'warning');
@@ -235,8 +237,8 @@ const HeaderSolicitud = (props) => {
 
             if (idTicket != null) {
                 await GetByID(idTicket, idDepa); // mejor control async
-            }else {
-                await GetByIDSinTicket( idDepa);
+            } else {
+                await GetByIDSinTicket(idDepa);
             }
 
 
@@ -375,7 +377,7 @@ const HeaderSolicitud = (props) => {
 
 
     useEffect(() => {
-        if (habilitarPantalla === 1) {
+        if (habilitarPantalla === 1 || habilitadoEditar === 1) {
             setTicket(props.ticket);
             getAll(props.ticket, valoridDep);
 

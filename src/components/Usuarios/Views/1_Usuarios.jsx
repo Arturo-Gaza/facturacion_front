@@ -58,10 +58,10 @@ const Afectacion = (props) => {
         setId(id)
     }
 
-    const handleClose = () => {
+    const handleClose = async () => {
         setOpen(!open)
-        GetListCatalogo();
         setId(null)
+        await GetListCatalogo();
     }
 
     const handleCancel = () => {
@@ -71,7 +71,6 @@ const Afectacion = (props) => {
     //::::::::::: OBTENER FILTRO ::::::::::::::::::::
     const [_ListCatalogo, setListCatalogo] = useState([])
     const GetListCatalogo = () => {
-        console.time("getUsuarios");
         props.props.setOpenLoadingScreen()
         requests
             .getToken(GET_LIST_USER) //### ** 
@@ -85,7 +84,6 @@ const Afectacion = (props) => {
                 });
             }).finally(() => {
                 props.props.setCloseLoadingScreen();
-                console.timeEnd("getUsuarios");
             });
     }
 
@@ -287,6 +285,20 @@ const Afectacion = (props) => {
                             <StyledTableCell align="center">
                                 <label className='textLabel3'>Departamento</label>
                             </StyledTableCell>
+                            <StyledTableCell align="center" width="15%">
+                                <label className="textLabel3">Habilitado</label>
+                                <Tooltip title="Filtrar por Estatus">
+                                    <IconButton
+                                        onClick={porHabilitado}
+                                        style={{ width: "30px", height: "30px" }}
+                                    >
+                                        <FilterAltIcon
+                                            sx={{ color: "black" }}
+                                            style={{ width: "20px", height: "20px" }}
+                                        />
+                                    </IconButton>
+                                </Tooltip>
+                            </StyledTableCell>
 
                             {/* <StyledTableCell align="center" width="15%">
                                 <label className='textLabel3'>Habilitado</label>
@@ -331,6 +343,10 @@ const Afectacion = (props) => {
                                     <StyledTableCell>
                                         <label className='textLabel4'>{item.departamento.descripcion}</label> {/* //### ** */}
                                     </StyledTableCell>
+                                    <StyledTableCell align="center">
+                                        <Checkbox disabled checked={item.habilitado} />
+                                    </StyledTableCell>
+
                                     {/* <StyledTableCell align="center">
                                         <Checkbox
                                             disabled
@@ -375,6 +391,7 @@ const Afectacion = (props) => {
                         handleCancel={handleCancel}
                         id={id}
                         titulo={titulo}
+                        GetListCatalogo={GetListCatalogo}
                     />
 
                     <AlertEliminarUsuario

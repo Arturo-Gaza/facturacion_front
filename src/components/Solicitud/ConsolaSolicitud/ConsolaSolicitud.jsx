@@ -85,6 +85,8 @@ const ConsolaSolicitud = (props) => {
     const Editar = (item) => {
         navigate(EDITARSOLICITUD + item.id, {
             state: {
+                habilitadoEditar: 1,
+                idDepartamentoUsuarioSoli: item.usuario_solicitud.departamento.id,
                 solicitudItem: item
             }
         });
@@ -595,7 +597,7 @@ const ConsolaSolicitud = (props) => {
             </Grid>
 
             <label className='textLabel1'>Total de Registros: {results.length} </label>
-            <Box sx={{overflowX: 'auto' }}>
+            <Box sx={{ overflowX: 'auto' }}>
                 <Table sx={{ minWidth: 80 }} aria-label="customized table">
                     <TableHead>
                         <StyledTableRow>
