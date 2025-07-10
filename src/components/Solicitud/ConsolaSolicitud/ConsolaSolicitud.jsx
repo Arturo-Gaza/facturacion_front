@@ -359,6 +359,47 @@ const ConsolaSolicitud = (props) => {
             });
     }
 
+    const [isInitialized, setIsInitialized] = useState(false);
+
+    useEffect(() => {
+        if (mostrarFiltros === false) {
+            setSearchTicket('');
+            setSearchPrioridad('');
+            setSearchEstatus('');
+            setSearchFechaAct('');
+            setSearchDepartamento('');
+            setSearchusuario('');
+        }
+    }, [mostrarFiltros]);
+
+    useEffect(() => {
+        const saved = JSON.parse(sessionStorage.getItem('filtrosTickets'));
+        if (saved) {
+            setSearchTicket(saved.searchTicket || '');
+            setSearchPrioridad(saved.searchPrioridad || '');
+            setSearchEstatus(saved.searchEstatus || '');
+            setSearchFechaAct(saved.searchFechaAct || '');
+            setSearchDepartamento(saved.searchDepartamento || '');
+            setSearchusuario(saved.searchUsuario || '');
+            setMostrarFiltros(saved.mostrarFiltros || '');
+        }
+        setIsInitialized(true);
+    }, []);
+
+    useEffect(() => {
+        if (!isInitialized) return;
+        const filtros = {
+            searchTicket,
+            searchPrioridad,
+            searchEstatus,
+            searchFechaAct,
+            searchDepartamento,
+            searchUsuario,
+            mostrarFiltros
+        };
+        sessionStorage.setItem('filtrosTickets', JSON.stringify(filtros));
+    }, [searchTicket, searchPrioridad, searchEstatus, searchFechaAct, searchDepartamento, searchUsuario, isInitialized, mostrarFiltros,]);
+
     return (
         <div style={{ padding: '1%' }}>
             <center>
