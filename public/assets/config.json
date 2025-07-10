@@ -1,4 +1,4 @@
 {
-	"BASE_URL":"/api/",
+	"BASE_URL": "http://localhost:8000/api/",
 	"URL_SANCTUM": "http://localhost:8000/sanctum/csrf-cookie"
 }
