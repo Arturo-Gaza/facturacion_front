@@ -104,35 +104,34 @@ const DetalleSolicitud = (props) => {
         }
     }, [props._Tipo, props.solicitudTabla.id_categoria]);
     let solicitudDetalle = props.detalles || [];
-    const getAllSolicitudDetalle = async (listaArticulos) => {
+    const getAllSolicitudDetalle = async (listaArticulos, productoAdd = false) => {
         //props.props.setOpenLoadingScreen();
         try {
+            if (productoAdd === false) {
+                setListSolicitudDetalle(solicitudDetalle);
 
+                const enviar = solicitudDetalle.length > 0 &&
+                    solicitudDetalle
+                        .filter(detalle => detalle.habilitado === true)
+                        .every(detalle => detalle.cotizado === null || detalle.cotizado === true);
 
+                props.setEnviar(enviar);
 
-            setListSolicitudDetalle(solicitudDetalle);
-
-            const enviar = solicitudDetalle.length > 0 &&
-                solicitudDetalle
-                    .filter(detalle => detalle.habilitado === true)
-                    .every(detalle => detalle.cotizado === null || detalle.cotizado === true);
-
-            props.setEnviar(enviar);
-
-            // Si ya puede enviarse y está en estatus 5, cambia estatus
-            if (enviar && props.estatusSolicutud === 5) {
-                const estatus = {
-                    id_estatus: 1,
-                    id_solicitud: props._ticket
-                };
-                try {
-                    await requests.postToken(CAMBIAR_ESTATUS, estatus);
-                } catch (error) {
-                    console.error('Error al cambiar estatus:', error?.response?.data || error.message);
+                // Si ya puede enviarse y está en estatus 5, cambia estatus
+                if (enviar && props.estatusSolicutud === 5) {
+                    const estatus = {
+                        id_estatus: 1,
+                        id_solicitud: props._ticket
+                    };
+                    try {
+                        await requests.postToken(CAMBIAR_ESTATUS, estatus);
+                    } catch (error) {
+                        console.error('Error al cambiar estatus:', error?.response?.data || error.message);
+                    }
                 }
-            }
 
-            setLoadProdcuto(true);
+                setLoadProdcuto(true);
+            }
             // FiltrosExist(solicitudDetalle, listaArticulos, 0); // podrías reactivarlo si lo usas
 
         } catch (error) {
@@ -142,19 +141,8 @@ const DetalleSolicitud = (props) => {
         }
     };
 
-
-    const FiltrosExist = (solicitudDetalle, listaArticulos, idProducto) => {
-        const idsEnDetalle = solicitudDetalle
-            .filter(detalle => detalle.id_producto !== idProducto) // excluye el que se está editando
-            .map(detalle => detalle.id_producto);
-        const articulosFiltrados = listaArticulos.filter(articulo =>
-            !idsEnDetalle.includes(articulo.id)
-        );
-        setFilterOptions1(articulosFiltrados);
-    }
-
     const [loadProduct, setLoadProdcuto] = useState(false)
-    const getAll = async (idCategoria, idSolicitud, id = null) => {
+    const getAll = async (idCategoria, idSolicitud, id = null, productoAdd = false) => {
         if (estatusCrear == true) {
             props.props.setOpenLoadingScreen();
         }
@@ -206,7 +194,7 @@ const DetalleSolicitud = (props) => {
             }
 
             // Ejecuta la carga de detalles después (sin bloquear la vista)
-            setTimeout(() => getAllSolicitudDetalle(articuloListSinDuplicados), 100);
+            setTimeout(() => getAllSolicitudDetalle(articuloListSinDuplicados, productoAdd), 100);
 
         } catch (error) {
             props.props.setMessageSnackBar(error.message, 'warning');
@@ -684,7 +672,7 @@ const DetalleSolicitud = (props) => {
     const handleClose = (id) => {
         let idCategoria = props.solicitudTabla.id_categoria;
         setOpen(!open)
-        getAll(idCategoria, props._ticket, id);
+        getAll(idCategoria, props._ticket, id, true);
     }
 
     const handleCancel = () => {
