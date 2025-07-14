@@ -189,6 +189,7 @@ export const UPDATE_ESTATUS_SOLICITUDES = 'tabSolicitudes/cambiarEstatus'
 export const ASIGNAR_USUARIO_SOLICITUDES = 'tabSolicitudes/asignar'
 export const REASIGNAR_USUARIO_SOLICITUDES = 'tabSolicitudes/reasignar'
 export const DELETE_TAB_SOLICITUDES = ''
+export const GET_TAB_COTIZACIONESSOLICITUD_BY_ID ='tabSolicitudes/getCotizaciones/'
 
 /*::::::::::::::::::::::::::::	Cat Moneda	*/
 export const GET_LIST_MONEDA = 'catMoneda/getAll'

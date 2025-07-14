@@ -6,40 +6,32 @@ import {
     InputLabel,
     MenuItem,
     Modal,
-    Paper,
     Select,
     Table,
     TableBody,
-    TableCell,
-    TableContainer,
     TableHead,
-    TableRow,
     Tooltip,
     Typography
 } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
-import { CAMBIAR_ESTATUS, CREATE_ARCHIVO, CREATE_ARCHIVO_COTIZACIONES, CREATE_ARCHIVO_COTIZACIONES_GENERAL, CREATE_TAB_SOLICITUDES_DETALLE, DELETE_ARCHIVO, DELETE_ARCHIVO_COTIZACIONES, DELETE_ARCHIVO_COTIZACIONES_GENERAL, GET_ARCHIVO_BY_ID_SOLICITUD_DETALLE, GET_CAT_PRODUCTOSBY_ID_CATEGORIA, GET_LIST_CAT_GRUPO_FAMILIA, GET_LIST_CAT_UNIDAD_MEDIDA, GET_TAB_SOLICITUDES_DETALLE_BY_ID_SOLICITUD, UPDATE_ARCHIVO_COTIZACIONES, UPDATE_ARCHIVO_COTIZACIONES_GENERAL, UPDATE_TAB_SOLICITUDES_DETALLE } from '../../../../Constants/ApiConstants';
+import { useEffect, useState } from 'react';
+import { CAMBIAR_ESTATUS, CREATE_ARCHIVO, CREATE_ARCHIVO_COTIZACIONES, CREATE_ARCHIVO_COTIZACIONES_GENERAL, CREATE_TAB_SOLICITUDES_DETALLE, DELETE_ARCHIVO_COTIZACIONES, DELETE_ARCHIVO_COTIZACIONES_GENERAL, GET_CAT_PRODUCTOSBY_ID_CATEGORIA, GET_LIST_CAT_GRUPO_FAMILIA, GET_LIST_CAT_UNIDAD_MEDIDA, GET_TAB_SOLICITUDES_DETALLE_BY_ID_SOLICITUD, UPDATE_ARCHIVO_COTIZACIONES, UPDATE_ARCHIVO_COTIZACIONES_GENERAL, UPDATE_TAB_SOLICITUDES_DETALLE } from '../../../../Constants/ApiConstants';
 import { TextFieldGeneral, TextFieldGeneral2, TextFieldNumber } from '../../../../Styles/TextField/TextField';
 import requests from '../../../AxiosCalls/AxiosCallsLocal';
-
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
-import CloseIcon from '@mui/icons-material/Close';
+import AlertBtnCotizar from '../../../../alerts/_TKSAlertBtnCotizar';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import StarIcon from '@mui/icons-material/Star';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { StyledTableCell, StyledTableRow } from '../../../../Styles/Table/Table';
-import moment from 'moment';
 
-import AlertaDocumentoCotizacion from '../../../../alerts/_TKSAlertDocumentoCotizacion';
-import AlertaDocumentoCotizacionGeneral from '../../../../alerts/_TKSAlertDocumentoCotizacion';
-import AlertaEnviarCotizacion from '../../../../alerts/_TKSAlertEnviarCotizacion';
+import { useNavigate } from 'react-router-dom';
 import AlertaChangeCotizacion from '../../../../alerts/_TKSAlertchangeCotizacion';
 import AlertaDocumento from '../../../../alerts/_TKSAlertDocumento';
+import { default as AlertaDocumentoCotizacion, default as AlertaDocumentoCotizacionGeneral } from '../../../../alerts/_TKSAlertDocumentoCotizacion';
+import AlertaEnviarCotizacion from '../../../../alerts/_TKSAlertEnviarCotizacion';
 import AlertaSolicitarInformacion from '../../../../alerts/_TKSAlertSolitarInfo';
-import { validateSolicitudDetalle, validateSolicitudDetalle2 } from '../../../../Utils/Validacion/solicitudes';
 import { SOLICITUD } from '../../../../Constants/NavegacionRoutes';
-import { useNavigate } from 'react-router-dom';
+import { validateSolicitudDetalle, validateSolicitudDetalle2 } from '../../../../Utils/Validacion/solicitudes';
 
 const DetalleSolicitud = (props) => {
     const [enviar, setEnviar] = useState(false)
@@ -1033,23 +1025,42 @@ const DetalleSolicitud = (props) => {
         setModalAbiertoCotizacionGeneral(true);
     };
 
+    const [btncotizarAlert, setBtncotizarAlert] = useState(false);
+    const BtnCotizar = () => {
+        setBtncotizarAlert(true);
+    }
+
     return (
         <div>
-            <Grid container justifyContent="right" sx={{ paddingRight: 4, margin: 2 }}>
-
-                <FormControl sx={{ minWidth: 220 }} size="small">
-                    <InputLabel id="cotizacion-select-label">Tipo de Cotización</InputLabel>
-                    <Select
-                        labelId="cotizacion-select-label"
-                        id="cotizacion-select"
-                        value={cotizacionGeneral ? "articulo" : "general"}
-                        label="Tipo de Cotización"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="general">Cotización por artículo</MenuItem>
-                        <MenuItem value="articulo">Cotización General</MenuItem>
-                    </Select>
-                </FormControl>
+            <Grid container alignItems="center" justifyContent="space-between" sx={{ padding: 2 }}>
+                <Grid item>
+                    {props.estatusSolicitud === 7 ? (
+                        <Button
+                            variant="outlined"
+                            component="label"
+                            fullWidth
+                            onClick={BtnCotizar}
+                            sx={{ backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }}
+                        >Empezar cotización</Button>
+                    ) : (null)}
+                </Grid>
+                <Grid item>
+                    {props.estatusSolicitud != 7 ? (
+                        <FormControl sx={{ minWidth: 220 }} size="small">
+                            <InputLabel id="cotizacion-select-label">Tipo de Cotización</InputLabel>
+                            <Select
+                                labelId="cotizacion-select-label"
+                                id="cotizacion-select"
+                                value={cotizacionGeneral ? "articulo" : "general"}
+                                label="Tipo de Cotización"
+                                onChange={handleChange}
+                            >
+                                <MenuItem value="general">Cotización por artículo</MenuItem>
+                                <MenuItem value="articulo">Cotización General</MenuItem>
+                            </Select>
+                        </FormControl>
+                    ) : (null)}
+                </Grid>
             </Grid>
             <Box
                 sx={{
@@ -1072,10 +1083,12 @@ const DetalleSolicitud = (props) => {
                             <StyledTableCell align={'center'}><label className='textLabel3'>Modelo</label></StyledTableCell>
                             <StyledTableCell align={'center'}><label className='textLabel3'>Observación</label></StyledTableCell>
                             <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
-                            {cotizacionGeneral != true ? (
+                            {cotizacionGeneral != true && props.estatusSolicitud != 7 ? (
                                 <StyledTableCell align={'center'}><label className='textLabel3'>Estatus Cotizado</label></StyledTableCell>
                             ) : (null)}
-                            <StyledTableCell align={'center'}><label className='textLabel3'>Acción</label></StyledTableCell>
+                            {props.estatusSolicitud != 7 ? (
+                                <StyledTableCell align={'center'}><label className='textLabel3'>Acción</label></StyledTableCell>
+                            ) : (null)}
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -1089,185 +1102,189 @@ const DetalleSolicitud = (props) => {
                                 <StyledTableCell align={'center'}><label className='textLabel4'>{row.modelo}</label></StyledTableCell>
                                 <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'>{typeof row.observacion === 'string' ? row.observacion.length > 300 ? row.observacion.substring(0, 300) + '...' : row.observacion : ''}</label></Box></StyledTableCell>
                                 <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
-                                {cotizacionGeneral != true ? (
+                                {cotizacionGeneral != true && props.estatusSolicitud != 7 ? (
                                     <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.cotizado == null ? 'Sin revisión' : row.cotizado ? 'Cotizado' : 'Con observaciones'}</label></StyledTableCell>
                                 ) : (null)}
-                                <StyledTableCell>
-                                    <IconButton
-                                        onClick={() => editarDetalle(row, i)}
-                                    >
-                                        <FindInPageIcon sx={{ color: "#0066CC" }} />
-                                    </IconButton>
-                                </StyledTableCell>
+                                {props.estatusSolicitud != 7 ? (
+                                    <StyledTableCell>
+                                        <IconButton
+                                            onClick={() => editarDetalle(row, i)}
+                                        >
+                                            <FindInPageIcon sx={{ color: "#0066CC" }} />
+                                        </IconButton>
+                                    </StyledTableCell>
+                                ) : (null)}
                             </StyledTableRow>
                         ))}
                     </TableBody>
                 </Table>
             </Box>
-            <Box
-                sx={{
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    padding: 2,
-                    margin: 2,
-                }}
-            >
-                <Grid container spacing={2}>
-                    <Grid item xs={2}>
-                        <Autocomplete
-                            disabled
-                            options={filterOptions1}
-                            getOptionLabel={(option) => {
-                                const duplicados = filterOptions1.filter(o => o.clave_producto?.toLowerCase() === option.clave_producto?.toLowerCase());
-                                if (duplicados.length > 1) {
-                                    const index = duplicados.findIndex(o => o.id === option.id);
-                                    return `${option.clave_producto || 'N/A'} (${index + 1})`;
-                                }
-                                return option.clave_producto || 'N/A';
-                            }}
-                            renderInput={(params) =>
-                                <TextFieldGeneral
-                                    idprops={true}
-                                    error={(errorSolicitudDetalle.id ? (true) : (false))}
-                                    label={"Articulos"}
-                                    className="inputTextSize100disabled"
-                                    {...params}
-                                    placeholder="Buscar.."
-                                />}
-                            value={(filterOptions1?.find(option => option.id === articulosSet.id)) || null}
-                            onChange={(event, value) =>
-                                handleArticulos({ target: { name: 'id', value: value?.id } })
-                            }
-                            noOptionsText="No hay opciones"
-                        />
-                        {errorSolicitudDetalle.id && (
-                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.id}</span>
-                        )}
-                    </Grid>
-                    <Grid item xs={7}>
-                        <TextFieldGeneral
-                            idprops={true}
-                            error={(errorSolicitudDetalle.descripcion_producto ? (true) : (false))}
-                            className="inputTextSize100disabled"
-                            //multiline
-                            //minRows={2}
-                            label="Descripción del articulo"
-                            value={articulosSet.descripcion_producto}
-                            name='descripcion_producto'
-                            onChange={handleArticulos}
-                        />
-                        {errorSolicitudDetalle.descripcion_producto && (
-                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.descripcion_producto}</span>
-                        )}
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Autocomplete
-                            disabled
-                            options={filterOptions2}
-                            getOptionLabel={(option) => option.clave_unidad_medida}
-                            renderInput={(params) =>
-                                <TextFieldGeneral
-                                    idprops={true}
-                                    className="inputTextSize100disabled"
-                                    label={"Unidad Medida"}
-                                    {...params}
-                                    placeholder="Buscar.."
-                                />}
-                            value={filterOptions2?.find(option => option.id === articulosSet.id_unidad_medida) || null}
-                            onChange={(event, value) =>
-                                handleArticulos({ target: { name: 'id_unidad_medida', value: value?.id } })
-                            }
-                            noOptionsText="No hay opciones"
-                        />
-                    </Grid>
-                    <Grid item xs={1}>
-                        <TextFieldNumber
-                            idprops={true}
-                            error={(errorSolicitudDetalle.cantidad ? (true) : (false))}
-                            className="inputTextSize100disabled"
-                            label="cantidad"
-                            value={detalleSolicitud.cantidad}
-                            name='cantidad'
-                            onChange={handleDetalleSolicitudCantidad}
-                        />
-                        {errorSolicitudDetalle.cantidad && (
-                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.Rol}</span>
-                        )}
-                    </Grid>
-
-                    <Grid item xs={12}>
-                        <TextFieldGeneral
-                            idprops={true}
-                            error={(errorSolicitudDetalle.descripcion ? (true) : (false))}
-                            className="inputTextSize100disabled"
-                            label="Descripción de la Solicitud"
-                            value={detalleSolicitud.descripcion}
-                            name='descripcion'
-                            onChange={handleDetalleSolicitud}
-                        />
-                        {errorSolicitudDetalle.descripcion && (
-                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.descripcion}</span>
-                        )}
-                    </Grid>
-                    {reqMarcaModelo == false ? (null) : (
-                        <>
+            {props.estatusSolicitud != 7 ? (
+                <>
+                    <Box
+                        sx={{
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                            padding: 2,
+                            margin: 2,
+                        }}
+                    >
+                        <Grid container spacing={2}>
                             <Grid item xs={2}>
+                                <Autocomplete
+                                    disabled
+                                    options={filterOptions1}
+                                    getOptionLabel={(option) => {
+                                        const duplicados = filterOptions1.filter(o => o.clave_producto?.toLowerCase() === option.clave_producto?.toLowerCase());
+                                        if (duplicados.length > 1) {
+                                            const index = duplicados.findIndex(o => o.id === option.id);
+                                            return `${option.clave_producto || 'N/A'} (${index + 1})`;
+                                        }
+                                        return option.clave_producto || 'N/A';
+                                    }}
+                                    renderInput={(params) =>
+                                        <TextFieldGeneral
+                                            idprops={true}
+                                            error={(errorSolicitudDetalle.id ? (true) : (false))}
+                                            label={"Articulos"}
+                                            className="inputTextSize100disabled"
+                                            {...params}
+                                            placeholder="Buscar.."
+                                        />}
+                                    value={(filterOptions1?.find(option => option.id === articulosSet.id)) || null}
+                                    onChange={(event, value) =>
+                                        handleArticulos({ target: { name: 'id', value: value?.id } })
+                                    }
+                                    noOptionsText="No hay opciones"
+                                />
+                                {errorSolicitudDetalle.id && (
+                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.id}</span>
+                                )}
+                            </Grid>
+                            <Grid item xs={7}>
                                 <TextFieldGeneral
                                     idprops={true}
-                                    error={(errorSolicitudDetalle.marca ? (true) : (false))}
+                                    error={(errorSolicitudDetalle.descripcion_producto ? (true) : (false))}
                                     className="inputTextSize100disabled"
-                                    label="Marca"
-                                    value={detalleSolicitud.marca}
-                                    name='marca'
-                                    onChange={handleDetalleSolicitud}
+                                    //multiline
+                                    //minRows={2}
+                                    label="Descripción del articulo"
+                                    value={articulosSet.descripcion_producto}
+                                    name='descripcion_producto'
+                                    onChange={handleArticulos}
                                 />
-                                {errorSolicitudDetalle.marca && (
-                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.marca}</span>
+                                {errorSolicitudDetalle.descripcion_producto && (
+                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.descripcion_producto}</span>
                                 )}
                             </Grid>
                             <Grid item xs={2}>
-                                <TextFieldGeneral
-                                    idprops={true}
-                                    error={(errorSolicitudDetalle.modelo ? (true) : (false))}
-                                    className="inputTextSize100disabled"
-                                    label="Modelo y/o No Parte"
-                                    value={detalleSolicitud.modelo}
-                                    name='modelo'
-                                    onChange={handleDetalleSolicitud}
+                                <Autocomplete
+                                    disabled
+                                    options={filterOptions2}
+                                    getOptionLabel={(option) => option.clave_unidad_medida}
+                                    renderInput={(params) =>
+                                        <TextFieldGeneral
+                                            idprops={true}
+                                            className="inputTextSize100disabled"
+                                            label={"Unidad Medida"}
+                                            {...params}
+                                            placeholder="Buscar.."
+                                        />}
+                                    value={filterOptions2?.find(option => option.id === articulosSet.id_unidad_medida) || null}
+                                    onChange={(event, value) =>
+                                        handleArticulos({ target: { name: 'id_unidad_medida', value: value?.id } })
+                                    }
+                                    noOptionsText="No hay opciones"
                                 />
-                                {errorSolicitudDetalle.modelo && (
-                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.modelo}</span>
+                            </Grid>
+                            <Grid item xs={1}>
+                                <TextFieldNumber
+                                    idprops={true}
+                                    error={(errorSolicitudDetalle.cantidad ? (true) : (false))}
+                                    className="inputTextSize100disabled"
+                                    label="cantidad"
+                                    value={detalleSolicitud.cantidad}
+                                    name='cantidad'
+                                    onChange={handleDetalleSolicitudCantidad}
+                                />
+                                {errorSolicitudDetalle.cantidad && (
+                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.Rol}</span>
                                 )}
                             </Grid>
-                        </>
-                    )}
 
-                    <Grid container item spacing={2} xs={8}>
-                        <Grid item xs={12}>
-                            <Autocomplete
-                                options={filterOptions3}
-                                getOptionLabel={(option) => option.clave_gpo_familia + "/" + option.descripcion_gpo_familia}
-                                disabled
-                                renderInput={(params) =>
-                                    <TextFieldGeneral
-                                        idprops={true}
-                                        error={(errorSolicitudDetalle.id_gpo_familia ? (true) : (false))}
-                                        label={"Grupo de artículos"}
-                                        className="inputTextSize100disabled"
-                                        {...params}
-                                        placeholder="Buscar.."
-                                    />}
-                                value={filterOptions3?.find(option => option.id === articulosSet.id_gpo_familia) || null}
-                                onChange={(event, value) =>
-                                    handleArticulos({ target: { name: 'id_gpo_familia', value: value?.id } })
-                                }
-                                noOptionsText="No hay opciones"
-                            />
-                            {errorSolicitudDetalle.id_gpo_familia && (
-                                <span className="label_Quest_Validaciones">{errorSolicitudDetalle.id_gpo_familia}</span>
+                            <Grid item xs={12}>
+                                <TextFieldGeneral
+                                    idprops={true}
+                                    error={(errorSolicitudDetalle.descripcion ? (true) : (false))}
+                                    className="inputTextSize100disabled"
+                                    label="Descripción de la Solicitud"
+                                    value={detalleSolicitud.descripcion}
+                                    name='descripcion'
+                                    onChange={handleDetalleSolicitud}
+                                />
+                                {errorSolicitudDetalle.descripcion && (
+                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.descripcion}</span>
+                                )}
+                            </Grid>
+                            {reqMarcaModelo == false ? (null) : (
+                                <>
+                                    <Grid item xs={2}>
+                                        <TextFieldGeneral
+                                            idprops={true}
+                                            error={(errorSolicitudDetalle.marca ? (true) : (false))}
+                                            className="inputTextSize100disabled"
+                                            label="Marca"
+                                            value={detalleSolicitud.marca}
+                                            name='marca'
+                                            onChange={handleDetalleSolicitud}
+                                        />
+                                        {errorSolicitudDetalle.marca && (
+                                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.marca}</span>
+                                        )}
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                        <TextFieldGeneral
+                                            idprops={true}
+                                            error={(errorSolicitudDetalle.modelo ? (true) : (false))}
+                                            className="inputTextSize100disabled"
+                                            label="Modelo y/o No Parte"
+                                            value={detalleSolicitud.modelo}
+                                            name='modelo'
+                                            onChange={handleDetalleSolicitud}
+                                        />
+                                        {errorSolicitudDetalle.modelo && (
+                                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.modelo}</span>
+                                        )}
+                                    </Grid>
+                                </>
                             )}
-                        </Grid>
-                        {/* <Grid item xs={9}>
+
+                            <Grid container item spacing={2} xs={8}>
+                                <Grid item xs={12}>
+                                    <Autocomplete
+                                        options={filterOptions3}
+                                        getOptionLabel={(option) => option.clave_gpo_familia + "/" + option.descripcion_gpo_familia}
+                                        disabled
+                                        renderInput={(params) =>
+                                            <TextFieldGeneral
+                                                idprops={true}
+                                                error={(errorSolicitudDetalle.id_gpo_familia ? (true) : (false))}
+                                                label={"Grupo de artículos"}
+                                                className="inputTextSize100disabled"
+                                                {...params}
+                                                placeholder="Buscar.."
+                                            />}
+                                        value={filterOptions3?.find(option => option.id === articulosSet.id_gpo_familia) || null}
+                                        onChange={(event, value) =>
+                                            handleArticulos({ target: { name: 'id_gpo_familia', value: value?.id } })
+                                        }
+                                        noOptionsText="No hay opciones"
+                                    />
+                                    {errorSolicitudDetalle.id_gpo_familia && (
+                                        <span className="label_Quest_Validaciones">{errorSolicitudDetalle.id_gpo_familia}</span>
+                                    )}
+                                </Grid>
+                                {/* <Grid item xs={9}>
                             <TextFieldGeneral
                                 idprops={true}
                                 className="inputTextSize100disabled"
@@ -1280,298 +1297,300 @@ const DetalleSolicitud = (props) => {
 
                             />
                         </Grid> */}
-                    </Grid>
+                            </Grid>
 
-                    <Grid item xs={12}>
-                        <TextFieldGeneral
-                            idprops={true}
-                            error={(errorSolicitudDetalle.observacion ? (true) : (false))}
-                            className="inputTextSize100disabled"
-                            //multiline
-                            //minRows={2}
-                            label="Observación de la Solicitud"
-                            value={detalleSolicitud.observacion}
-                            name='observacion'
-                            onChange={handleDetalleSolicitud}
-                        />
-                        {errorSolicitudDetalle.observacion && (
-                            <span className="label_Quest_Validaciones">{errorSolicitudDetalle.observacion}</span>
-                        )}
-                    </Grid>
-                    <Grid container item >
-                        <Grid item xs={12}>
                             <Grid item xs={12}>
-                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                    <Typography variant="body2">
-                                        Número de archivos adjuntado por el usuario: {archivosBase64.length}
-                                    </Typography>
-                                </Box>
+                                <TextFieldGeneral
+                                    idprops={true}
+                                    error={(errorSolicitudDetalle.observacion ? (true) : (false))}
+                                    className="inputTextSize100disabled"
+                                    //multiline
+                                    //minRows={2}
+                                    label="Observación de la Solicitud"
+                                    value={detalleSolicitud.observacion}
+                                    name='observacion'
+                                    onChange={handleDetalleSolicitud}
+                                />
+                                {errorSolicitudDetalle.observacion && (
+                                    <span className="label_Quest_Validaciones">{errorSolicitudDetalle.observacion}</span>
+                                )}
                             </Grid>
-                            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
-                                {archivosBase64.map((archivo, index) => (
-                                    <div key={index} style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        background: '#f0f0f0',
-                                        padding: '4px 8px',
-                                        borderRadius: 6,
-                                        fontSize: '0.8rem'
-                                    }}>
-                                        {archivo.nombre}
-                                        <IconButton size="small" onClick={() => verImagen(index, archivo)}>
-                                            <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
-                                        </IconButton>
+                            <Grid container item >
+                                <Grid item xs={12}>
+                                    <Grid item xs={12}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                            <Typography variant="body2">
+                                                Número de archivos adjuntado por el usuario: {archivosBase64.length}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                    <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
+                                        {archivosBase64.map((archivo, index) => (
+                                            <div key={index} style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                background: '#f0f0f0',
+                                                padding: '4px 8px',
+                                                borderRadius: 6,
+                                                fontSize: '0.8rem'
+                                            }}>
+                                                {archivo.nombre}
+                                                <IconButton size="small" onClick={() => verImagen(index, archivo)}>
+                                                    <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
+                                                </IconButton>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Box>
-            {detalleSolicitud.id > 0 && cotizacionGeneral == false ? (
-                <>
-                    <Box
-                        sx={{
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
-                            padding: 2,
-                            margin: 2,
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid container item>
-                                <Grid item xs={9}>
-                                    <Grid item xs={3}>
-                                        <Button
-                                            disabled={detalleSolicitud.cotizado === false ? true : false}
-                                            variant="outlined"
-                                            component="label"
-                                            fullWidth
-                                            sx={
-                                                detalleSolicitud.cotizado === false ? (
-                                                    { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
-                                                ) : (
-                                                    { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
-                                                )
-                                            }
-                                        >
-                                            Adjuntar cotizaciones
-                                            <input
-                                                type="file"
-                                                hidden
-                                                multiple
-                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
-                                                onChange={handleCotizar}
-                                            />
-                                        </Button>
-                                    </Grid>
-
-                                    <Grid item xs={9}>
-                                        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
-                                            {cotizacionBase64.map((archivo, index) => (
-                                                <div key={index} style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    background: '#f0f0f0',
-                                                    padding: '4px 8px',
-                                                    borderRadius: 6,
-                                                    fontSize: '0.8rem'
-                                                }}>
-                                                    {archivo.nombre_cotizacion}
-                                                    <Tooltip title="Ver cotización">
-                                                        <IconButton size="small" onClick={() => verImagenCotizacion(index, archivo)}>
-                                                            <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Eliminar cotización">
-                                                        <IconButton size="small" onClick={() => eliminarCotizacion(index, archivo)}>
-                                                            <DeleteForeverIcon fontSize="small" sx={{ color: "red" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Asignar como cotización recomendado">
-                                                        <IconButton disabled={archivo.recomendada == true ? true : false} size="small" onClick={() => handleOpenModalJustificacion(index)}>
-                                                            <StarIcon fontSize="small" sx={{ color: archivo.recomendada == true ? "#FFCC00" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={3} spacing={1}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                        <Button
-                                            disabled={detalleSolicitud.cotizado === true ? true : false}
-                                            onClick={SolicitarInformacion}
-                                            //className="btn-aceptar"
-                                            variant="contained"
-                                            sx={
-                                                detalleSolicitud.cotizado === true ? (
-                                                    { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
-                                                ) : (
-                                                    { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
-                                                )
-                                            }
-                                        >
-                                            {'Solicitar información adicional a usuario'}
-                                        </Button>
-                                    </Box>
                                 </Grid>
                             </Grid>
-
-                            <Grid item xs={12} spacing={2} alignItems="center" >
-                                {cotizacionBase64.map((archivo, index) => (
-                                    archivo.recomendada === true && (
-                                        <>
-                                            <TextFieldGeneral2
-                                                error={(errorSolicitudDetalle.justificacion ? (true) : (false))}
-                                                label="Justificación de la cotización recomendada"
-                                                fullWidth
-                                                multiline
-                                                rows={4}
-                                                value={cotizacionBase64[index].justificacion}
-                                                onChange={(e) => hadleJustificacion(e.target.value, index)}
-                                            />
-                                            {errorSolicitudDetalle.justificacion && (
-                                                <span className="label_Quest_Validaciones">{errorSolicitudDetalle.justificacion}</span>
-                                            )}
-                                        </>
-
-                                    )
-                                ))}
-                            </Grid>
                         </Grid>
-                        {detalleSolicitud.cotizado === true ? (
-                            <center>
-                                <Grid container sx={{ marginTop: 1 }} justifyContent="center">
-                                    <Button
-                                        onClick={handleSubmit}
-                                        disabled={cotizacionGeneral == true ? true : false}
-                                        className={cotizacionGeneral == true ? "btn-aceptar-disabled" : "btn-aceptar"}
-                                        variant={"contained"}
-                                        sx={{ mr: 1 }}
-                                    >
-                                        Guardar
-                                    </Button>
-                                </Grid>
-                            </center>
-                        ) : (null)}
                     </Box>
-                </>
-            ) : null}
+                    {detalleSolicitud.id > 0 && cotizacionGeneral == false ? (
+                        <>
+                            <Box
+                                sx={{
+                                    border: '1px solid #ccc',
+                                    borderRadius: '4px',
+                                    padding: 2,
+                                    margin: 2,
+                                }}
+                            >
+                                <Grid container spacing={2}>
+                                    <Grid container item>
+                                        <Grid item xs={9}>
+                                            <Grid item xs={3}>
+                                                <Button
+                                                    disabled={detalleSolicitud.cotizado === false ? true : false}
+                                                    variant="outlined"
+                                                    component="label"
+                                                    fullWidth
+                                                    sx={
+                                                        detalleSolicitud.cotizado === false ? (
+                                                            { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
+                                                        ) : (
+                                                            { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
+                                                        )
+                                                    }
+                                                >
+                                                    Adjuntar cotizaciones
+                                                    <input
+                                                        type="file"
+                                                        hidden
+                                                        multiple
+                                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
+                                                        onChange={handleCotizar}
+                                                    />
+                                                </Button>
+                                            </Grid>
 
-            {cotizacionGeneral == true ? (
-                <>
-                    <Box
-                        sx={{
-                            border: '1px solid #ccc',
-                            borderRadius: '4px',
-                            padding: 2,
-                            margin: 2,
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid container item>
-                                <Grid item xs={9}>
-                                    <Grid item xs={3}>
-                                        <Button
-                                            disabled={detalleSolicitud.cotizado === false ? true : false}
-                                            variant="outlined"
-                                            component="label"
-                                            fullWidth
-                                            sx={
-                                                detalleSolicitud.cotizado === false ? (
-                                                    { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
-                                                ) : (
-                                                    { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
-                                                )
-                                            }
-                                        >
-                                            Adjuntar cotización general
-                                            <input
-                                                type="file"
-                                                hidden
-                                                multiple
-                                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
-                                                onChange={handleCotizarGenaral}
-                                            />
-                                        </Button>
-                                    </Grid>
-
-                                    <Grid item xs={9}>
-                                        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
-                                            {cotizacionGeneralBase64.map((archivo, index) => (
-                                                <div key={index} style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    background: '#f0f0f0',
-                                                    padding: '4px 8px',
-                                                    borderRadius: 6,
-                                                    fontSize: '0.8rem'
-                                                }}>
-                                                    {archivo.nombre_cotizacion}
-                                                    <Tooltip title="Ver cotización">
-                                                        <IconButton size="small" onClick={() => verImagenCotizacionGeneral(index, archivo)}>
-                                                            <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Eliminar cotización">
-                                                        <IconButton size="small" onClick={() => eliminarCotizacionGeneral(index, archivo)}>
-                                                            <DeleteForeverIcon fontSize="small" sx={{ color: "red" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                    <Tooltip title="Asignar como cotización recomendado">
-                                                        <IconButton disabled={archivo.recomendada == true ? true : false} size="small" onClick={() => handleOpenModalJustificacionGeneral(index)}>
-                                                            <StarIcon fontSize="small" sx={{ color: archivo.recomendada == true ? "#FFCC00" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
+                                            <Grid item xs={9}>
+                                                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
+                                                    {cotizacionBase64.map((archivo, index) => (
+                                                        <div key={index} style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            background: '#f0f0f0',
+                                                            padding: '4px 8px',
+                                                            borderRadius: 6,
+                                                            fontSize: '0.8rem'
+                                                        }}>
+                                                            {archivo.nombre_cotizacion}
+                                                            <Tooltip title="Ver cotización">
+                                                                <IconButton size="small" onClick={() => verImagenCotizacion(index, archivo)}>
+                                                                    <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip title="Eliminar cotización">
+                                                                <IconButton size="small" onClick={() => eliminarCotizacion(index, archivo)}>
+                                                                    <DeleteForeverIcon fontSize="small" sx={{ color: "red" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip title="Asignar como cotización recomendado">
+                                                                <IconButton disabled={archivo.recomendada == true ? true : false} size="small" onClick={() => handleOpenModalJustificacion(index)}>
+                                                                    <StarIcon fontSize="small" sx={{ color: archivo.recomendada == true ? "#FFCC00" : "#0066CC" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={3} spacing={1}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                <Button
+                                                    disabled={detalleSolicitud.cotizado === true ? true : false}
+                                                    onClick={SolicitarInformacion}
+                                                    //className="btn-aceptar"
+                                                    variant="contained"
+                                                    sx={
+                                                        detalleSolicitud.cotizado === true ? (
+                                                            { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
+                                                        ) : (
+                                                            { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
+                                                        )
+                                                    }
+                                                >
+                                                    {'Solicitar información adicional a usuario'}
+                                                </Button>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid item xs={12} spacing={2} alignItems="center" >
+                                        {cotizacionBase64.map((archivo, index) => (
+                                            archivo.recomendada === true && (
+                                                <>
+                                                    <TextFieldGeneral2
+                                                        error={(errorSolicitudDetalle.justificacion ? (true) : (false))}
+                                                        label="Justificación de la cotización recomendada"
+                                                        fullWidth
+                                                        multiline
+                                                        rows={4}
+                                                        value={cotizacionBase64[index].justificacion}
+                                                        onChange={(e) => hadleJustificacion(e.target.value, index)}
+                                                    />
+                                                    {errorSolicitudDetalle.justificacion && (
+                                                        <span className="label_Quest_Validaciones">{errorSolicitudDetalle.justificacion}</span>
+                                                    )}
+                                                </>
+
+                                            )
+                                        ))}
                                     </Grid>
                                 </Grid>
-                            </Grid>
+                                {detalleSolicitud.cotizado === true ? (
+                                    <center>
+                                        <Grid container sx={{ marginTop: 1 }} justifyContent="center">
+                                            <Button
+                                                onClick={handleSubmit}
+                                                disabled={cotizacionGeneral == true ? true : false}
+                                                className={cotizacionGeneral == true ? "btn-aceptar-disabled" : "btn-aceptar"}
+                                                variant={"contained"}
+                                                sx={{ mr: 1 }}
+                                            >
+                                                Guardar
+                                            </Button>
+                                        </Grid>
+                                    </center>
+                                ) : (null)}
+                            </Box>
+                        </>
+                    ) : null}
 
-                            <Grid item xs={12} spacing={2} alignItems="center" >
-                                {cotizacionGeneralBase64.map((archivo, index) => (
-                                    archivo.recomendada === true && (
-                                        <>
-                                            <TextFieldGeneral2
-                                                error={(errorcotizacionGeneral.justificacion_general ? (true) : (false))}
-                                                label="Justificación de la cotización recomendada"
-                                                fullWidth
-                                                multiline
-                                                rows={4}
-                                                value={cotizacionGeneralBase64[index].justificacion_general}
-                                                onChange={(e) => hadleJustificacionGeneral(e.target.value, index)}
-                                            />
-                                            {errorcotizacionGeneral.justificacion_general && (
-                                                <span className="label_Quest_Validaciones">{errorcotizacionGeneral.justificacion_general}</span>
-                                            )}
-                                        </>
+                    {cotizacionGeneral == true ? (
+                        <>
+                            <Box
+                                sx={{
+                                    border: '1px solid #ccc',
+                                    borderRadius: '4px',
+                                    padding: 2,
+                                    margin: 2,
+                                }}
+                            >
+                                <Grid container spacing={2}>
+                                    <Grid container item>
+                                        <Grid item xs={9}>
+                                            <Grid item xs={3}>
+                                                <Button
+                                                    disabled={detalleSolicitud.cotizado === false ? true : false}
+                                                    variant="outlined"
+                                                    component="label"
+                                                    fullWidth
+                                                    sx={
+                                                        detalleSolicitud.cotizado === false ? (
+                                                            { backgroundColor: 'grey', color: '#000', '&:hover': { backgroundColor: 'grey' } }
+                                                        ) : (
+                                                            { backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }
+                                                        )
+                                                    }
+                                                >
+                                                    Adjuntar cotización general
+                                                    <input
+                                                        type="file"
+                                                        hidden
+                                                        multiple
+                                                        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg,.eml,.msg"
+                                                        onChange={handleCotizarGenaral}
+                                                    />
+                                                </Button>
+                                            </Grid>
 
-                                    )
-                                ))}
-                            </Grid>
-                        </Grid>
-                        {cotizacionGeneralBase64.length > 0 ? (
-                            <center>
-                                <Grid container sx={{ marginTop: 1 }} justifyContent="center">
-                                    <Button
-                                        onClick={handleSubmitCotizacioGeneral}
-                                        disabled={cotizacionGeneral == true ? false : true}
-                                        className={cotizacionGeneral == true ? "btn-aceptar" : "btn-aceptar-disabled"}
-                                        variant={"contained"}
-                                        sx={{ mr: 1 }}
-                                    >
-                                        Guardar
-                                    </Button>
+                                            <Grid item xs={9}>
+                                                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginTop: 4 }}>
+                                                    {cotizacionGeneralBase64.map((archivo, index) => (
+                                                        <div key={index} style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            background: '#f0f0f0',
+                                                            padding: '4px 8px',
+                                                            borderRadius: 6,
+                                                            fontSize: '0.8rem'
+                                                        }}>
+                                                            {archivo.nombre_cotizacion}
+                                                            <Tooltip title="Ver cotización">
+                                                                <IconButton size="small" onClick={() => verImagenCotizacionGeneral(index, archivo)}>
+                                                                    <VisibilityIcon fontSize="small" sx={{ color: "#0066CC" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip title="Eliminar cotización">
+                                                                <IconButton size="small" onClick={() => eliminarCotizacionGeneral(index, archivo)}>
+                                                                    <DeleteForeverIcon fontSize="small" sx={{ color: "red" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip title="Asignar como cotización recomendado">
+                                                                <IconButton disabled={archivo.recomendada == true ? true : false} size="small" onClick={() => handleOpenModalJustificacionGeneral(index)}>
+                                                                    <StarIcon fontSize="small" sx={{ color: archivo.recomendada == true ? "#FFCC00" : "#0066CC" }} />
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid item xs={12} spacing={2} alignItems="center" >
+                                        {cotizacionGeneralBase64.map((archivo, index) => (
+                                            archivo.recomendada === true && (
+                                                <>
+                                                    <TextFieldGeneral2
+                                                        error={(errorcotizacionGeneral.justificacion_general ? (true) : (false))}
+                                                        label="Justificación de la cotización recomendada"
+                                                        fullWidth
+                                                        multiline
+                                                        rows={4}
+                                                        value={cotizacionGeneralBase64[index].justificacion_general}
+                                                        onChange={(e) => hadleJustificacionGeneral(e.target.value, index)}
+                                                    />
+                                                    {errorcotizacionGeneral.justificacion_general && (
+                                                        <span className="label_Quest_Validaciones">{errorcotizacionGeneral.justificacion_general}</span>
+                                                    )}
+                                                </>
+
+                                            )
+                                        ))}
+                                    </Grid>
                                 </Grid>
-                            </center>
-                        ) : (null)}
-                    </Box>
+                                {cotizacionGeneralBase64.length > 0 ? (
+                                    <center>
+                                        <Grid container sx={{ marginTop: 1 }} justifyContent="center">
+                                            <Button
+                                                onClick={handleSubmitCotizacioGeneral}
+                                                disabled={cotizacionGeneral == true ? false : true}
+                                                className={cotizacionGeneral == true ? "btn-aceptar" : "btn-aceptar-disabled"}
+                                                variant={"contained"}
+                                                sx={{ mr: 1 }}
+                                            >
+                                                Guardar
+                                            </Button>
+                                        </Grid>
+                                    </center>
+                                ) : (null)}
+                            </Box>
+                        </>
+                    ) : null}
                 </>
-            ) : null}
+            ) : (null)}
             <center>
                 <Grid container sx={{ marginTop: 1 }} justifyContent="center">
                     <Button
@@ -1584,9 +1603,8 @@ const DetalleSolicitud = (props) => {
                     </Button>
                     {cotizacionGeneral == true ? (
                         <Button
-                            //disabled={props.estatusCotizacionGlobla != true ? true : false}
-                            //className={props.estatusCotizacionGlobla != true ? "btn-aceptar-disabled" : "btn-aceptar"}
-                            className={"btn-aceptar"}
+                            disabled={props.estatusSolicitud === 7 ? true : false}
+                            className={props.estatusSolicitud === 7 ? "btn-aceptar-disabled" : "btn-aceptar"}
                             onClick={() => EnviarCotizacion(2)}
                             variant={"contained"}
                         >
@@ -1594,9 +1612,8 @@ const DetalleSolicitud = (props) => {
                         </Button>
                     ) : (
                         <Button
-                            //disabled={props.estatusCotizacionGlobla != true ? true : false}
-                            //className={props.estatusCotizacionGlobla != true ? "btn-aceptar-disabled" : "btn-aceptar"}
-                            className={"btn-aceptar"}
+                            disabled={props.estatusSolicitud === 7 ? true : false}
+                            className={props.estatusSolicitud === 7 ? "btn-aceptar-disabled" : "btn-aceptar"}
                             onClick={() => EnviarCotizacion(1)}
                             variant={"contained"}
                         >
@@ -1610,6 +1627,13 @@ const DetalleSolicitud = (props) => {
                 open={alertEnviar}
                 close={() => setAlertEnviar(false)}
                 handleEnviar={handleEnviar}
+            />
+
+            <AlertBtnCotizar
+                props={props}
+                open={btncotizarAlert}
+                close={() => setBtncotizarAlert(false)}
+                cambioEstatus={cambioEstatus}
             />
 
             <AlertaChangeCotizacion

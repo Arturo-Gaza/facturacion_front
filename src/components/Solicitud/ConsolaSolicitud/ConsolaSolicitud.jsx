@@ -4,54 +4,55 @@ import React, { useEffect, useState } from 'react';
 import {
     Box,
     Button,
+    Dialog,
     Grid,
     IconButton,
-    Tooltip, Dialog
+    Tooltip
 } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
-import moment from "moment";
 //ACCIONES
-import { GET_LIST_TAB_SOLICITUDES, CAMBIAR_ESTATUS, GET_TAB_SOLICITUDES_DETALLE_BY_ID_SOLICITUD, UPDATE_TAB_SOLICITUDES, ASIGNAR_USUARIO_SOLICITUDES, TABLA_REPORTE } from '../../../Constants/ApiConstants';
+import { ASIGNAR_USUARIO_SOLICITUDES, CAMBIAR_ESTATUS, GET_LIST_TAB_SOLICITUDES, TABLA_REPORTE } from '../../../Constants/ApiConstants';
 
 import requests from '../../AxiosCalls/AxiosCallsLocal';
 //import Acciones from '../Actions/1_CargaAlmacen'; //###
 //ICONOS 
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditNoteIcon from '@mui/icons-material/EditNote';
 import BlockIcon from '@mui/icons-material/Block';
-import SendIcon from '@mui/icons-material/Send';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SendIcon from '@mui/icons-material/Send';
 import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 
 //ESTILOS
 import { StyledTableCell, StyledTableRow } from '../../../Styles/Table/Table';
-import { TextFieldGeneral, TextFieldGeneral2 } from '../../../Styles/TextField/TextField';
+import { TextFieldGeneral2 } from '../../../Styles/TextField/TextField';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useUserContenidoContext } from '../../../hooks/UserConteProvider';
 
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
-import LockIcon from '@mui/icons-material/Lock';
 import AlertaAsignacion from '../../../alerts/_TKSAlertAsignacion';
 
 
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import { useNavigate } from 'react-router-dom';
 import AlertaObservaciones from '../../../alerts/_TKSAlertObservaciones';
 import AlertaVisualizar from '../../../alerts/AlertVisualizar';
 import { COTIZARSOLICITUD, CREARSOLICITUD, EDITARSOLICITUD } from '../../../Constants/NavegacionRoutes';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 
 import AlertaCerrarSolicitud from '../../../alerts/_TKSAlertCerrarSolicitud';
 import AlertEliminarSolicitud from '../../../alerts/_TKSAlertEliminarSolicitud';
 
-import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
+import FilterListIcon from '@mui/icons-material/FilterList';
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import AlertCotizacionSolicitudConsola from '../../../alerts/_TKSAlertCotizacionSolicitudConsola';
 
 const ConsolaSolicitud = (props) => {
     const user = useUserContenidoContext();
@@ -79,6 +80,7 @@ const ConsolaSolicitud = (props) => {
     const [openVisualSoli, setOpenVisualSoli] = useState(false);
     const [openCerrarSoli, setOpenCerrarSoli] = useState(false);
     const [openDeleteSoli, setOpenDeleteSoli] = useState(false);
+    const [openVisualizarCotiza, setOpenVisualizarCotiza] = useState(false);
     const [openObserv, setOpenObserv] = useState(false);
     const [solicitudItem, setSolicitudItem] = useState();
 
@@ -121,6 +123,12 @@ const ConsolaSolicitud = (props) => {
         setSolicitudItem(item);
         setOpenDeleteSoli(true)
     }
+
+    const VisualizarCotizacion = (item) => {
+        setSolicitudItem(item);
+        setOpenVisualizarCotiza(true)
+    }
+
 
     const Cotizar = (item) => {
         navigate(COTIZARSOLICITUD + item.id, {
@@ -406,6 +414,13 @@ const ConsolaSolicitud = (props) => {
                 <h2> {titulo}</h2>
             </center>
 
+            <AlertCotizacionSolicitudConsola
+                props={props}
+                open={openVisualizarCotiza}
+                close={setOpenVisualizarCotiza}
+                solicitudItem={solicitudItem}
+            />
+
             <AlertaAsignacion
                 props={props}
                 open={openAsigSoli}
@@ -663,9 +678,9 @@ const ConsolaSolicitud = (props) => {
                     </TableHead>
                     <TableBody>
                         {results.slice(inicio, fin).map((fila, i) => (
-                            <StyledTableRow key={fila.key}>
+                            <StyledTableRow key={fila.key || i}>
                                 {columnas.map((col) => (
-                                    <StyledTableCell key={`${fila.key}-${col.key}`} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
+                                    <StyledTableCell key={`${fila.key || i}-${col.key || col.nombre}`} align={col.opcion1} sx={{ whiteSpace: col.whiteSpace }}>
                                         {
 
                                             col.key === "descripcion" && col.visible === true ? (
@@ -697,89 +712,99 @@ const ConsolaSolicitud = (props) => {
                                                 <>
                                                     {[1, 4].includes(parseInt(user.idRol, 10)) && (
                                                         <Tooltip title="Editar Solicitud">
-                                                            <IconButton
-                                                                disabled={[2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud)}
-                                                                color="primary"
-                                                                onClick={() => Editar(fila)}
-                                                            >
-                                                                <EditNoteIcon sx={{ color: [2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                            </IconButton>
+                                                            <span>
+                                                                <IconButton
+                                                                    disabled={[2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud)}
+                                                                    color="primary"
+                                                                    onClick={() => Editar(fila)}
+                                                                >
+                                                                    <EditNoteIcon sx={{ color: [2, 3, 4, 7, 8].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                                </IconButton>
+                                                            </span>
                                                         </Tooltip>
                                                     )}
 
                                                     {[1, 2].includes(parseInt(user.idRol, 10)) && (
                                                         <Tooltip title="Asignación de Solicitud">
-                                                            <IconButton
-                                                                disabled={[3, 4].includes(fila.id_estatus_solicitud)}
-                                                                color="primary"
-                                                                onClick={() => Asignacion(fila)}
-                                                            >
-                                                                <AssignmentIndIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                            </IconButton>
+                                                            <span>
+                                                                <IconButton
+                                                                    disabled={[3, 4].includes(fila.id_estatus_solicitud)}
+                                                                    color="primary"
+                                                                    onClick={() => Asignacion(fila)}
+                                                                >
+                                                                    <AssignmentIndIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                                </IconButton>
+                                                            </span>
                                                         </Tooltip>
                                                     )}
 
                                                     {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
                                                         <Tooltip title="Visualizar Solicitud">
-                                                            <IconButton
-                                                                color="primary"
-                                                                onClick={() => Visualizar(fila)}
-                                                            >
-                                                                <FindInPageIcon sx={{ color: "#0066CC" }} />
-                                                            </IconButton>
+                                                            <span>
+                                                                <IconButton
+                                                                    color="primary"
+                                                                    onClick={() => Visualizar(fila)}
+                                                                >
+                                                                    <FindInPageIcon sx={{ color: "#0066CC" }} />
+                                                                </IconButton>
+                                                            </span>
                                                         </Tooltip>
                                                     )}
 
                                                     {[1, 2, 3].includes(parseInt(user.idRol, 10)) && (
                                                         <Tooltip title="Cotizar Solicitud">
-                                                            <IconButton
-                                                                disabled={[2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud)}
-                                                                color="primary"
-                                                                onClick={() => Cotizar(fila)}
-                                                            >
-                                                                <AnalyticsIcon sx={{ color: [2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                            </IconButton>
+                                                            <span>
+                                                                <IconButton
+                                                                    disabled={[2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud)}
+                                                                    color="primary"
+                                                                    onClick={() => Cotizar(fila)}
+                                                                >
+                                                                    <AnalyticsIcon sx={{ color: [2, 3, 4, 5, 9].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
+                                                                </IconButton>
+                                                            </span>
                                                         </Tooltip>
                                                     )}
 
                                                     {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
                                                         <Tooltip title="Cancelar Solicitud">
-                                                            <IconButton
-                                                                disabled={[3, 4].includes(fila.id_estatus_solicitud)}
-                                                                color="primary"
-                                                                onClick={() => Eliminar(fila)}
-                                                            >
-                                                                <BlockIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "red" }} />
-                                                            </IconButton>
+                                                            <span>
+                                                                <IconButton
+                                                                    disabled={[3, 4].includes(fila.id_estatus_solicitud)}
+                                                                    color="primary"
+                                                                    onClick={() => Eliminar(fila)}
+                                                                >
+                                                                    <BlockIcon sx={{ color: [3, 4].includes(fila.id_estatus_solicitud) ? "grey" : "red" }} />
+                                                                </IconButton>
+                                                            </span>
                                                         </Tooltip>
                                                     )}
-
-                                                    {/* {[1, 2, 3, 4].includes(parseInt(user.idRol, 10)) && (
-                                                    <Tooltip title="Concluido">
-                                                        <IconButton
-                                                            disabled={[1, 2, 3, 4, 5, 6, 7, 8].includes(fila.id_estatus_solicitud)}
-                                                            color="primary"
-                                                            onClick={() => Cerrar(fila)}
-                                                        >
-                                                            <LockIcon sx={{ color: [1, 2, 3, 4, 5, 6, 7, 8].includes(fila.id_estatus_solicitud) ? "grey" : "#0066CC" }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                )} */}
                                                     {/* {parseInt(user.idRol, 10) === 4 && fila.id_estatus_solicitud === 1  && ( */}
                                                     {[4].includes(parseInt(user.idRol, 10)) && (
                                                         [1, 5].includes(fila.id_estatus_solicitud) && (
                                                             <Tooltip title="Enviar Solicitud">
-                                                                <IconButton
-                                                                    color="primary"
-                                                                    onClick={() => {
-                                                                        setSolicitudSeleccionada({ id: fila.id, estatus: fila.id_estatus_solicitud });
-                                                                        setOpenDialog(true);
-                                                                    }}
-                                                                >
-                                                                    <SendIcon sx={{ color: "#0066CC" }} />
-                                                                </IconButton>
+                                                                <span>
+                                                                    <IconButton
+                                                                        color="primary"
+                                                                        onClick={() => {
+                                                                            setSolicitudSeleccionada({ id: fila.id, estatus: fila.id_estatus_solicitud });
+                                                                            setOpenDialog(true);
+                                                                        }}
+                                                                    >
+                                                                        <SendIcon sx={{ color: "#0066CC" }} />
+                                                                    </IconButton>
+                                                                </span>
                                                             </Tooltip>
                                                         ))}
+
+                                                    <Tooltip title="Visualizar Cotizaciones">
+                                                        <IconButton
+                                                            disabled={[false].includes(fila.tiene_archivos_cotizacion)}
+                                                            color="primary"
+                                                            onClick={() => VisualizarCotizacion(fila)}
+                                                        >
+                                                            <VisibilityIcon sx={{ color: [false].includes(fila.tiene_archivos_cotizacion) ? "grey" : "#0066CC" }} />
+                                                        </IconButton>
+                                                    </Tooltip>
 
                                                 </>
                                             ) : col.key === "Observaciones" && col.visible === true ? (
