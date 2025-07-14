@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   // <React.StrictMode>  este me quita el llamado os veces del use effect revisar si en producion pasa eso si lo activamos
-  <BrowserRouter>
+  <BrowserRouter >
     <StepProvider>
       <UserContenidoProvider>
         <SnackbarProvider maxSnack={5}>

@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStepContext, useStepSetContext } from '../../hooks/StepProvider';
 
 //***********TABS::::::::::::::::::::::: */
 import { Box } from '@mui/material';
 //import Tabs1 from '../../components/Catalogos/Views/1_Almacen';
-import Tabs2 from '../../components/Catalogos/Views/4_Producto'
+import Tabs6 from '../../components/Catalogos/Views/10_Tipo';
+import Tabs8 from '../../components/Catalogos/Views/11_Departamento';
 import Tabs3 from '../../components/Catalogos/Views/2_Unidad_Medida';
 import Tabs4 from '../../components/Catalogos/Views/3_Grupo_Familia ';
+import Tabs2 from '../../components/Catalogos/Views/4_Producto';
 import Tabs5 from '../../components/Catalogos/Views/7_Moneda';
-import Tabs6 from '../../components/Catalogos/Views/10_Tipo';
 import Tabs7 from '../../components/Catalogos/Views/9_Categoria';
-import Tabs8 from '../../components/Catalogos/Views/11_Departamento';
 //import Tabs4 from '../../components/Catalogos/Views/4_Producto';
 //import Tabs6 from '../../components/Catalogos/Views/5_Roles';
 //import Tabs7 from '../../components/Catalogos/Views/6_Ubicacion';

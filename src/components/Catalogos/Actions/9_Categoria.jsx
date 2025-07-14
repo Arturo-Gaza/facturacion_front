@@ -1,8 +1,8 @@
-import { Box, Button, Checkbox, Dialog, Grid, Slide, MenuItem, Select } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import { CREATE_CATEGORIA, GET_CATEGORIA_ID, UPDATE_CATEGORIA, GET_LIST_TIPO } from "../../../Constants/ApiConstants";
-import { TextFieldGeneral } from '../../../Styles/TextField/TextField';
+import { Box, Button, Checkbox, Dialog, Grid, Slide } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { CREATE_CATEGORIA, GET_CATEGORIA_ID, GET_LIST_TIPO, UPDATE_CATEGORIA } from "../../../Constants/ApiConstants";
 import { MenuItemGeneral, SelectGeneral } from "../../../Styles/Select/Select";
+import { TextFieldGeneral } from '../../../Styles/TextField/TextField';
 import { CAT_Categoria } from '../../../Utils/Validacion/Catolgos';
 import requests from '../../AxiosCalls/AxiosCallsLocal';
 

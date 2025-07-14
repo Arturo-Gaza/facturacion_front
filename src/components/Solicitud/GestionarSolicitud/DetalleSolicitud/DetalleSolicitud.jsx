@@ -1,42 +1,36 @@
 import {
     Autocomplete,
     Box,
-    Button, Grid,
+    Button,
+    Dialog,
+    Grid,
     IconButton,
-    Modal,
-    Paper,
     Table,
     TableBody,
-    TableCell,
-    TableContainer,
     TableHead,
-    TableRow,
-    Typography,
-    Dialog
+    Typography
 } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import {
+    CAMBIAR_ESTATUS,
     CREATE_ARCHIVO, CREATE_TAB_SOLICITUDES_DETALLE, DELETE_ARCHIVO,
-    GET_ARCHIVO_BY_ID_SOLICITUD_DETALLE, GET_CAT_PRODUCTOSBY_ID_CATEGORIA,
-    GET_LIST_CAT_GRUPO_FAMILIA, GET_LIST_CAT_UNIDAD_MEDIDA, GET_TAB_SOLICITUDES_DETALLE_BY_ID_SOLICITUD,
-    UPDATE_TAB_SOLICITUDES_DETALLE, DELETE_TAB_SOLICITUDES_DETALLE,
-    CAMBIAR_ESTATUS
+    DELETE_TAB_SOLICITUDES_DETALLE,
+    GET_CAT_PRODUCTOSBY_ID_CATEGORIA,
+    UPDATE_TAB_SOLICITUDES_DETALLE
 } from '../../../../Constants/ApiConstants';
 import { TextFieldGeneral, TextFieldGeneral2, TextFieldNumber } from '../../../../Styles/TextField/TextField';
 import requests from '../../../AxiosCalls/AxiosCallsLocal';
 
-import EditNoteIcon from '@mui/icons-material/EditNote';
-import CloseIcon from '@mui/icons-material/Close';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { StyledTableCell, StyledTableRow } from '../../../../Styles/Table/Table';
-import moment from 'moment';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
 
-import AlertaDocumento from '../../../../alerts/_TKSAlertDocumento';
-import AlertObserDetalle from '../../../../alerts/_TKSAlertObserDetalle';
 import AlertCotizacionDetalle from '../../../../alerts/_TKSAlertCotizacionDetalle';
 import AlertCotizacionGeneralDetalle from '../../../../alerts/_TKSAlertCotizacionGeneralDetalle';
+import AlertaDocumento from '../../../../alerts/_TKSAlertDocumento';
+import AlertObserDetalle from '../../../../alerts/_TKSAlertObserDetalle';
 import { validateSolicitudDetalle } from '../../../../Utils/Validacion/solicitudes';
 
 import DeleteIcon from '@mui/icons-material/Delete';

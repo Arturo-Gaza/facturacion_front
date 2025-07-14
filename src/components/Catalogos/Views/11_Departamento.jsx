@@ -12,24 +12,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 //ACCIONES
 import {
-  GET_LIST_DEPARTAMENTO,
   GET_ALL_COMPRAS,
   GET_DEPARTAMENTO_EXCEL,
+  GET_LIST_DEPARTAMENTO,
 } from "../../../Constants/ApiConstants";
 import AlertaFilter from "../../../alerts/FilterCatalogos";
 import requests from "../../AxiosCalls/AxiosCallsLocal";
 import Acciones from "../Actions/11_Departamento"; //###
 //ICONOS
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import EditNoteIcon from "@mui/icons-material/EditNote";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 //ESTILOS
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import { StyledTableCell, StyledTableRow } from "../../../Styles/Table/Table";
 import { TextFieldGeneral } from "../../../Styles/TextField/TextField";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 const Afectacion = (props) => {
   //::::::::::: MODALES ::::::::::::::::::::
   const [id, setId] = useState(null);

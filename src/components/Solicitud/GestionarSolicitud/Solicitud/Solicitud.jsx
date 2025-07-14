@@ -1,8 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from '../HeaderSolicitud/Header';
-import { useLocation } from 'react-router-dom';
 
 const Solicitud = ({ setMessageSnackBar, setCloseLoadingScreen, setOpenLoadingScreen, setMsjLoadingScreen, id }) => {
     const [_id, setId] = useState(null);
@@ -10,8 +9,6 @@ const Solicitud = ({ setMessageSnackBar, setCloseLoadingScreen, setOpenLoadingSc
     const location = useLocation();
     const valorDesdeNavegacion = location.state?.habilitarPantalla || 0;
     const [habilitarPantalla, sethabilitarPantalla] = useState(valorDesdeNavegacion);
-
-
 
     useEffect(() => {
         setId(id)

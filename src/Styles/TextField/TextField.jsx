@@ -4,9 +4,9 @@ import { TextMaskFormatoNumber } from '../../Utils/Current/Currents';
 
 // ::::::::::::::::::::::::::::ESTILO GENERAL::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 export const TextFieldGeneral = styled((props) => ( //<-------------- PUEDO RECIBIR UN PROPS PARA HABILITADO O DESHABILITADO
-	<TextField InputProps={{ disableUnderline: true, required: false }} {...props}
+	<TextField InputProps={{ required: false }} {...props}
 		fullWidth
-		autoComplete={false}
+		autoComplete="off"
 		required
 		disabled={props.idprops != null || props.idprops != undefined ? true : false || props.disabled !== undefined ? props.disabled : !!props.idprops}
 		size="small"
@@ -20,11 +20,11 @@ export const TextFieldGeneral = styled((props) => ( //<-------------- PUEDO RECI
 ))(({ theme }) => ({}));
 
 export const TextFieldGeneral2 = styled((props) => ( //<-------------- PUEDO RECIBIR UN PROPS PARA HABILITADO O DESHABILITADO
-	<TextField InputProps={{ disableUnderline: true }} {...props}
+	<TextField InputProps={{}} {...props}
 		fullWidth
-		autoComplete={false}
+		autoComplete="off"
 		disabled={props.idprops != null || props.idprops != undefined ? true : false
-				|| props.disabled !== undefined ? props.disabled : !!props.idprops
+			|| props.disabled !== undefined ? props.disabled : !!props.idprops
 		}
 		size="small"
 		sx={{
@@ -38,7 +38,7 @@ export const TextFieldGeneral2 = styled((props) => ( //<-------------- PUEDO REC
 
 // ::::::::::::::::::::::::::::ESTILO LOGIN::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 export const TextFailedLogin = styled((props, { idprops }) => (
-	<TextField InputProps={{ disableUnderline: true }} {...props}
+	<TextField InputProps={{}} {...props}
 		fullWidth
 		required
 		size="small"
@@ -55,12 +55,12 @@ export const TextFailedLogin = styled((props, { idprops }) => (
 
 // ::::::::::::::::::::::::::::ESTILO GENERAL::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 export const TextFieldNumber = styled((props) => ( //<-------------- PUEDO RECIBIR UN PROPS PARA HABILITADO O DESHABILITADO
-	<TextField InputProps={{ disableUnderline: true, inputComponent: TextMaskFormatoNumber }} {...props}
+	<TextField InputProps={{ inputComponent: TextMaskFormatoNumber }} {...props}
 		fullWidth
-		autoComplete={false}
+		autoComplete="off"
 		required
-		disabled={props.idprops != null || props.idprops != undefined ? true : false 
-				|| props.disabled !== undefined ? props.disabled : !!props.idprops}
+		disabled={props.idprops != null || props.idprops != undefined ? true : false
+			|| props.disabled !== undefined ? props.disabled : !!props.idprops}
 		size="small"
 		sx={{
 			'& .MuiInputBase-input': {

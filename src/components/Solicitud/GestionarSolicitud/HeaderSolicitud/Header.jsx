@@ -2,22 +2,20 @@ import {
     Autocomplete,
     Box,
     Button,
-    Grid,
-    Typography,
     Dialog,
-    Slide
+    Grid,
+    Typography
 } from '@mui/material';
-import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { CREATE_TAB_SOLICITUDES, GET_CATEGORIA_ID_DEPARTAMENTO, GET_LIST_CAT_UNIDAD_MEDIDA, GET_LIST_CAT_GRUPO_FAMILIA, ASIGNAR_USUARIO_SOLICITUDES, GET_TAB_SOLICITUDES_BY_ID, GET_TIPO_ID_DEPARTAMENTO, UPDATE_TAB_SOLICITUDES, CAMBIAR_ESTATUS } from '../../../../Constants/ApiConstants';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ASIGNAR_USUARIO_SOLICITUDES, CAMBIAR_ESTATUS, CREATE_TAB_SOLICITUDES, GET_CATEGORIA_ID_DEPARTAMENTO, GET_LIST_CAT_GRUPO_FAMILIA, GET_LIST_CAT_UNIDAD_MEDIDA, GET_TAB_SOLICITUDES_BY_ID, GET_TIPO_ID_DEPARTAMENTO, UPDATE_TAB_SOLICITUDES } from '../../../../Constants/ApiConstants';
 import { SOLICITUD } from '../../../../Constants/NavegacionRoutes';
 import { TextFieldGeneral } from '../../../../Styles/TextField/TextField';
+import { validateSolicitudHeader } from '../../../../Utils/Validacion/solicitudes';
+import AlertJustificacionPrioridad from '../../../../alerts/_TKSAlertJustificacionPrioridad';
 import { useUserContenidoContext } from '../../../../hooks/UserConteProvider';
 import requests from '../../../AxiosCalls/AxiosCallsLocal';
 import DetalleSolicitud from '../DetalleSolicitud/DetalleSolicitud';
-import { validateSolicitudHeader } from '../../../../Utils/Validacion/solicitudes';
-import { useLocation } from 'react-router-dom';
-import AlertJustificacionPrioridad from '../../../../alerts/_TKSAlertJustificacionPrioridad';
 const HeaderSolicitud = (props) => {
     const [enviar, setEnviar] = useState(false)
     //:::::::::::::::::::::: UserConteProvider :::::::::::::::::::::::

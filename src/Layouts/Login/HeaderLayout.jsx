@@ -1,7 +1,6 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { makeStyles } from '@mui/styles'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LOGIN } from '../../Constants/NavegacionRoutes'
 import { useUserContenidoContext } from '../../hooks/UserConteProvider'

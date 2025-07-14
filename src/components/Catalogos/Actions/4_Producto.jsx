@@ -1,21 +1,18 @@
 import { Box, Button, Checkbox, Dialog, Grid, Slide } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
-  CREATE_CAT_PRODUCTOS,
   CREATE_CAT_PRODUCTOS_SIN_CLAVE,
+  GET_CAT_BY_TIPO,
   GET_CAT_PRODUCTOSBY_ID,
-  GET_LIST_CATEGORIA,
-  GET_LIST_MONEDA,
   GET_LIST_CAT_GRUPO_FAMILIA,
   GET_LIST_CAT_UNIDAD_MEDIDA,
-  UPDATE_CAT_PRODUCTOS,
+  GET_LIST_MONEDA,
   GET_LIST_TIPO,
-  GET_CAT_BY_TIPO,
+  UPDATE_CAT_PRODUCTOS
 } from "../../../Constants/ApiConstants";
 import { MenuItemGeneral, SelectGeneral } from "../../../Styles/Select/Select";
 import { TextFieldGeneral } from "../../../Styles/TextField/TextField";
-import { CAT_Productos } from "../../../Utils/Validacion/Catolgos";
-import { CAT_Productos_Sin_Clave } from "../../../Utils/Validacion/Catolgos";
+import { CAT_Productos, CAT_Productos_Sin_Clave } from "../../../Utils/Validacion/Catolgos";
 import requests from "../../AxiosCalls/AxiosCallsLocal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

@@ -6,16 +6,15 @@ import {
     Typography
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CREATE_TAB_SOLICITUDES, GET_CATEGORIA_ID_DEPARTAMENTO, GET_LIST_CATEGORIA, GET_LIST_TIPO, GET_TAB_SOLICITUDES_BY_ID, GET_TIPO_ID_DEPARTAMENTO, UPDATE_TAB_SOLICITUDES } from '../../../../Constants/ApiConstants';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { CREATE_TAB_SOLICITUDES, GET_CATEGORIA_ID_DEPARTAMENTO, GET_TAB_SOLICITUDES_BY_ID, GET_TIPO_ID_DEPARTAMENTO, UPDATE_TAB_SOLICITUDES } from '../../../../Constants/ApiConstants';
 import { SOLICITUD } from '../../../../Constants/NavegacionRoutes';
 import { TextFieldGeneral } from '../../../../Styles/TextField/TextField';
-import { useUserContenidoContext } from '../../../../hooks/UserConteProvider';
-import requests from '../../../AxiosCalls/AxiosCallsLocal';
-import { useLocation } from 'react-router-dom';
-import DetalleSolicitud from '../DetalleSolicitud/DetalleSolicitud';
 import { validateSolicitudHeader } from '../../../../Utils/Validacion/solicitudes';
 import AlertJustificacionPrioridad from '../../../../alerts/_TKSAlertJustificacionPrioridad';
+import { useUserContenidoContext } from '../../../../hooks/UserConteProvider';
+import requests from '../../../AxiosCalls/AxiosCallsLocal';
+import DetalleSolicitud from '../DetalleSolicitud/DetalleSolicitud';
 
 const HeaderSolicitud = (props) => {
 

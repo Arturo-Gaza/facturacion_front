@@ -324,24 +324,26 @@ const AlertaObservaciones = (props) => {
                           <StyledTableCell align="center" width="15%">
                             <label className="textLabel3">Usuario</label>
                             <Tooltip title="Ordenar por Abecedario">
-                              <IconButton
-                                onClick={NombreAsc}
-                                style={{ width: "30px", height: "30px" }}
-                              >
-                                <ExpandLessIcon
-                                  sx={{ color: "black" }}
-                                  style={{ width: "20px", height: "20px" }}
-                                />
-                              </IconButton>
-                              <IconButton
-                                onClick={NombreDesc}
-                                style={{ width: "30px", height: "30px" }}
-                              >
-                                <ExpandMoreIcon
-                                  sx={{ color: "black" }}
-                                  style={{ width: "20px", height: "20px" }}
-                                />
-                              </IconButton>
+                              <span>
+                                <IconButton
+                                  onClick={NombreAsc}
+                                  style={{ width: "30px", height: "30px" }}
+                                >
+                                  <ExpandLessIcon
+                                    sx={{ color: "black" }}
+                                    style={{ width: "20px", height: "20px" }}
+                                  />
+                                </IconButton>
+                                <IconButton
+                                  onClick={NombreDesc}
+                                  style={{ width: "30px", height: "30px" }}
+                                >
+                                  <ExpandMoreIcon
+                                    sx={{ color: "black" }}
+                                    style={{ width: "20px", height: "20px" }}
+                                  />
+                                </IconButton>
+                              </span>
                             </Tooltip>
                           </StyledTableCell>
                           <StyledTableCell align="center">
@@ -353,15 +355,6 @@ const AlertaObservaciones = (props) => {
                           <StyledTableCell align="center">
                             <label className="textLabel3">Fecha</label>
                           </StyledTableCell>
-
-                          {/* <StyledTableCell align="center" >
-                                                    <label className='textLabel3'>Habilitado</label>
-                                                    <Tooltip title="Filtrar por Estatus">
-                                                        <IconButton onClick={porHabilitado} style={{ width: "30px", height: "30px" }}>
-                                                            <FilterAltIcon sx={{ color: "white" }} style={{ width: "20px", height: "20px", }} />
-                                                        </IconButton>
-                                                    </Tooltip>
-                                                </StyledTableCell> */}
                         </TableRow>
                       </TableHead>
 

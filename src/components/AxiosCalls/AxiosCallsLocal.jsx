@@ -2,8 +2,6 @@
 import axios from "axios";
 import $ from 'jquery';
 import { AxiosPermisos } from '../../components/AxiosCalls/AxiosPermisos';
-import { useNavigate } from "react-router-dom";
-
 var url = await axios("../../../assets/config.json").then(r => r.data);
 var getBaseUrl = url.BASE_URL;
 

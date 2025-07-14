@@ -1,6 +1,6 @@
 import { Box, Button, Checkbox, Dialog, Grid, Slide } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { CREATE_USER, GET_LIST_CAT_ROLES, GET_USER_BY_ID, UPDATE_USER, GET_LIST_DEPARTAMENTO } from "../../../Constants/ApiConstants";
+import { CREATE_USER, GET_LIST_CAT_ROLES, GET_LIST_DEPARTAMENTO, GET_USER_BY_ID, UPDATE_USER } from "../../../Constants/ApiConstants";
 import { MenuItemGeneral, SelectGeneral } from "../../../Styles/Select/Select";
 import { TextFieldGeneral } from '../../../Styles/TextField/TextField';
 import { passwordValid, Usuarios, ValidarCorreo } from "../../../Utils/Validacion/Usuarios";

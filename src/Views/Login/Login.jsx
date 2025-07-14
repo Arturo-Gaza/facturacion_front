@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Theme from '../../Styles/Theme';
 
 import Visibility from '@mui/icons-material/Visibility';
@@ -25,11 +25,11 @@ import { LOGIN_USER } from '../../Constants/ApiConstants';
 import { TextFailedLogin } from '../../Styles/TextField/TextField';
 import requests from '../../components/AxiosCalls/AxiosCallsLocal';
 
+import { SOLICITUD } from '../../Constants/NavegacionRoutes';
 import { FooterLayout } from '../../Layouts/Login/FooterLayout';
 import HeaderLayout from '../../Layouts/Login/HeaderLayout';
-import { useUserContenidoContext } from '../../hooks/UserConteProvider';
-import { SOLICITUD } from '../../Constants/NavegacionRoutes';
 import AlertCambiarContraseña from '../../alerts/AlertCambiarContraseña';
+import { useUserContenidoContext } from '../../hooks/UserConteProvider';
 
 const theme = createTheme();
 

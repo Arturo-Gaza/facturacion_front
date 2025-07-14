@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 //importamos las rutas de navegacion creadas en el archivo global que creamos
 import { LOGIN } from '../Constants/NavegacionRoutes';

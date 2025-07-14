@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Admin from '../../Views/CargaAlmacen/CargaAlmacen';
 import Almacen from '../../Views/Conteo/Conteo';
-import { useUserContenidoContext } from '../../hooks/UserConteProvider';
 
 const HomeView = ({ setMessageSnackBar, setCloseLoadingScreen, setOpenLoadingScreen, setMsjLoadingScreen }) => {
     return (

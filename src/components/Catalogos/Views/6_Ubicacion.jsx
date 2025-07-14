@@ -17,16 +17,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 //ACCIONES
-import { GET_LIST_CAT_UBICACIONES, GET_LIST_CAT_UBICACIONES_PAGINATE } from '../../../Constants/ApiConstants';
-import AlertaFilter from "../../../alerts/FilterCatalogos";
+import { GET_LIST_CAT_UBICACIONES_PAGINATE } from '../../../Constants/ApiConstants';
 import requests from '../../AxiosCalls/AxiosCallsLocal';
 import Acciones from '../Actions/6_Ubicacion'; //###
 //ICONOS 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 //ESTILOS
 import { StyledTableCell, StyledTableRow } from '../../../Styles/Table/Table';
 import { TextFieldGeneral } from '../../../Styles/TextField/TextField';

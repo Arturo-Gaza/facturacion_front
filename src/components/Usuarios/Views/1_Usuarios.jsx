@@ -18,14 +18,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 //ACCIONES
 import { GET_LIST_USER } from '../../../Constants/ApiConstants';
+import AlertEliminarUsuario from '../../../alerts/AlertEliminarUsuario';
 import AlertaFilter from "../../../alerts/FilterCatalogos";
 import requests from '../../AxiosCalls/AxiosCallsLocal';
 import Acciones from '../Actions/1_Usuarios'; //###
-import AlertEliminarUsuario from '../../../alerts/AlertEliminarUsuario';
 //ICONOS 
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";

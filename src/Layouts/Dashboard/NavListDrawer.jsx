@@ -7,14 +7,14 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ViewModuleIcon from '@mui/icons-material/ViewModule';
-import { CATALOGOS, CONTEO, HOME, SOLICITUD, USUARIOS, ROLES } from "../../Constants/NavegacionRoutes";
+import { CATALOGOS, HOME, ROLES, SOLICITUD, USUARIOS } from "../../Constants/NavegacionRoutes";
 import { useStepSetContext } from '../../hooks/StepProvider';
 import { useUserContenidoContext } from "../../hooks/UserConteProvider";
 
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import HomeIcon from '@mui/icons-material/Home';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 export default function NavListDrawer(props) {
     //:::::::::::::::::::::: step :::::::::::::::::::::::

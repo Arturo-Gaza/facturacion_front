@@ -1,6 +1,6 @@
 import { CssBaseline, IconButton } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import RoutesPublicas from './Routing/RoutesPublicas'
 import RoutesToken from './Routing/RoutesToken'
 import { ColorModeContext, useMode } from './theme'
@@ -8,11 +8,11 @@ import { ColorModeContext, useMode } from './theme'
 import '../src/Styles/StylesGenerla.css'
 
 //LOGO
+import CloseIcon from '@mui/icons-material/Close'
 import { closeSnackbar, useSnackbar } from 'notistack'
 import AlltubLogo from "../src/Images/AlltubLogo.png"
 import { useUserContenidoContext, useUserSetContenidoContext } from './hooks/UserConteProvider'
 import LoadingScreen from './Utils/LoadingScreen'
-import CloseIcon from '@mui/icons-material/Close';
 
 
 

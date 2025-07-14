@@ -13,8 +13,7 @@ import TableRow from "@mui/material/TableRow";
 //ACCIONES
 import {
   GET_CATEGORIA_EXCEL,
-  GET_DEPARTAMENTO_EXCEL,
-  GET_LIST_CATEGORIA,
+  GET_LIST_CATEGORIA
 } from "../../../Constants/ApiConstants";
 import AlertaFilter from "../../../alerts/FilterCatalogos";
 import requests from "../../AxiosCalls/AxiosCallsLocal";
@@ -26,9 +25,9 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 //ESTILOS
+import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 import { StyledTableCell, StyledTableRow } from "../../../Styles/Table/Table";
 import { TextFieldGeneral } from "../../../Styles/TextField/TextField";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 const Afectacion = (props) => {
   //::::::::::: MODALES ::::::::::::::::::::
   const [id, setId] = useState(null);

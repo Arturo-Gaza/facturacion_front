@@ -1,18 +1,18 @@
 import { Box, Button, Checkbox, Dialog, Grid, Slide } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  CREATE_DEPARTAMENTO,
-  GET_DEPARTAMENTO_ID,
-  UPDATE_DEPARTAMENTO,
-  GET_CATEGORIA_ID_DEPARTAMENTO,
-  GET_LIST_CATEGORIA,
   CREATE_CAT_DEPARTAMENTO,
+  CREATE_DEPARTAMENTO,
   GET_ALL_COMPRAS,
+  GET_CATEGORIA_ID_DEPARTAMENTO,
+  GET_DEPARTAMENTO_ID,
+  GET_LIST_CATEGORIA,
+  UPDATE_DEPARTAMENTO,
 } from "../../../Constants/ApiConstants";
+import { MenuItemGeneral, SelectGeneral } from "../../../Styles/Select/Select";
 import { TextFieldGeneral } from "../../../Styles/TextField/TextField";
 import { CAT_Departamento } from "../../../Utils/Validacion/Catolgos";
 import requests from "../../AxiosCalls/AxiosCallsLocal";
-import { MenuItemGeneral, SelectGeneral } from "../../../Styles/Select/Select";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
