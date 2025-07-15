@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogContent, Grid, IconButton, Paper, Table, TableBody, TableContainer, TableHead } from '@mui/material';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { StyledTableCell, StyledTableRow } from '../Styles/Table/Table';
 import moment from 'moment';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -8,13 +8,13 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 const AlertDocumentoCotizacion = (props) => {
     const [step, setStep] = useState(0)
     const [tablaCotizacion, TablaCotizaciones] = useState([])
+    const [cotizacionSeleccionado, setCotizacionSeleccionado] = useState(null);
+
     useEffect(() => {
         if (props.cotizaDetaInfo.length > 0) {
             TablaCotizaciones(props.cotizaDetaInfo);
         }
     }, [props.cotizaDetaInfo]);
-
-    const [cotizacionSeleccionado, setCotizacionSeleccionado] = useState(null);
 
     const verImagenCotizacion = (index, archivo) => {
         const tipoMime = archivo.archivo_cotizacion.split(';')[0].split(':')[1]; // extrae el tipo MIME
@@ -27,6 +27,41 @@ const AlertDocumentoCotizacion = (props) => {
         setCotizacionSeleccionado(null);
         setStep(0);
     }
+
+    const base64ToBlobUrl = (base64Data, mimeType) => {
+        const byteCharacters = atob(base64Data.split(',')[1]);
+        const byteArrays = [];
+
+        for (let i = 0; i < byteCharacters.length; i += 512) {
+            const slice = byteCharacters.slice(i, i + 512);
+            const byteNumbers = new Array(slice.length);
+            for (let j = 0; j < slice.length; j++) {
+                byteNumbers[j] = slice.charCodeAt(j);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: mimeType });
+        return URL.createObjectURL(blob);
+    };
+
+    const archivoUrl = useMemo(() => {
+        if (!cotizacionSeleccionado) return null;
+        const { archivo_cotizacion, tipoMime } = cotizacionSeleccionado;
+        if (tipoMime && (tipoMime.startsWith('image') || tipoMime === 'application/pdf')) {
+            return base64ToBlobUrl(archivo_cotizacion, tipoMime);
+        }
+        return null;
+    }, [cotizacionSeleccionado]);
+
+    useEffect(() => {
+        return () => {
+            if (archivoUrl) {
+                URL.revokeObjectURL(archivoUrl);
+            }
+        };
+    }, [archivoUrl]);
 
 
     return (
@@ -105,13 +140,13 @@ const AlertDocumentoCotizacion = (props) => {
                                 <h4>{cotizacionSeleccionado.nombre_cotizacion}</h4>
                                 {cotizacionSeleccionado.tipoMime.startsWith('image') ? (
                                     <img
-                                        src={cotizacionSeleccionado.archivo_cotizacion}
+                                        src={archivoUrl}
                                         alt="Vista previa"
                                         style={{ maxWidth: '100%', maxHeight: '60vh' }}
                                     />
                                 ) : cotizacionSeleccionado.tipoMime === 'application/pdf' ? (
                                     <embed
-                                        src={cotizacionSeleccionado.archivo_cotizacion}
+                                        src={archivoUrl}
                                         type="application/pdf"
                                         width="100%"
                                         height="500px"

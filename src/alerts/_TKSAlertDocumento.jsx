@@ -1,7 +1,34 @@
 import { Box, Dialog, DialogContent, Grid, IconButton } from '@mui/material';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import { useMemo } from 'react';
 
 const AlertDocumento = (props) => {
+    const base64ToBlobUrl = (base64Data, mimeType) => {
+        const byteCharacters = atob(base64Data.split(',')[1]);
+        const byteArrays = [];
+
+        for (let i = 0; i < byteCharacters.length; i += 512) {
+            const slice = byteCharacters.slice(i, i + 512);
+            const byteNumbers = new Array(slice.length);
+            for (let j = 0; j < slice.length; j++) {
+                byteNumbers[j] = slice.charCodeAt(j);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: mimeType });
+        return URL.createObjectURL(blob);
+    };
+
+    const archivoUrl = useMemo(() => {
+        const c = props.archivoSeleccionado;
+        if (!c || !c.archivo || !c.tipoMime) return null;
+        if (c.tipoMime.startsWith('image') || c.tipoMime === 'application/pdf') {
+            return base64ToBlobUrl(c.archivo, c.tipoMime);
+        }
+        return null;
+    }, [props.archivoSeleccionado]);
     return (
         <Dialog
             fullWidth
@@ -29,13 +56,13 @@ const AlertDocumento = (props) => {
                         <h4>{props.archivoSeleccionado.nombre}</h4>
                         {props.archivoSeleccionado.tipoMime.startsWith('image') ? (
                             <img
-                                src={props.archivoSeleccionado.archivo}
+                                src={archivoUrl}
                                 alt="Vista previa"
                                 style={{ maxWidth: '100%', maxHeight: '70vh' }}
                             />
                         ) : props.archivoSeleccionado.tipoMime === 'application/pdf' ? (
                             <embed
-                                src={props.archivoSeleccionado.archivo}
+                                src={archivoUrl}
                                 type="application/pdf"
                                 width="100%"
                                 height="600px"
