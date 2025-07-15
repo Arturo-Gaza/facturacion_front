@@ -20,7 +20,7 @@ const AlertEliminarCarga = (props) => {
         props.handleClose();
     };
     const Continuar = () => {
-        _ArrayCatalogo.user = props.nombre + '*'
+        _ArrayCatalogo.user = props.nombre
         props.props.props.setOpenLoadingScreen();
         requests
             .putToken(DELETE_USER + props.id, _ArrayCatalogo)
