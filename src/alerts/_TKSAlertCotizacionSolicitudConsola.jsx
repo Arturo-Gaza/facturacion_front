@@ -12,25 +12,26 @@ const AlertCotizacionSolicitudConsola = (props) => {
     const [tablaCotizacion, TablaCotizaciones] = useState([])
     const [cotizacionSeleccionado, setCotizacionSeleccionado] = useState(null);
     useEffect(() => {
-        if (props.solicitudItem != undefined) {
-            TablaCotizaciones([])
-            props.props.props.setOpenLoadingScreen()
-            requests
-                .getToken(GET_TAB_COTIZACIONESSOLICITUD_BY_ID + props.solicitudItem.id) //### ** 
-                .then((response) => {
-                    TablaCotizaciones(response.data)
-                })
-                .catch((error) => {
-                    error.response.data.errors.forEach(element => {
-                        props.props.props.setMessageSnackBar(element, 'warning');
+        if (props.open === true) {
+            if (props.solicitudItem != undefined) {
+                TablaCotizaciones([])
+                props.props.props.setOpenLoadingScreen()
+                requests
+                    .getToken(GET_TAB_COTIZACIONESSOLICITUD_BY_ID + props.solicitudItem.id) //### ** 
+                    .then((response) => {
+                        TablaCotizaciones(response.data)
+                    })
+                    .catch((error) => {
+                        error.response.data.errors.forEach(element => {
+                            props.props.props.setMessageSnackBar(element, 'warning');
+                        });
+                    })
+                    .finally(() => {
+
                     });
-                })
-                .finally(() => {
-
-                });
+            }
         }
-
-    }, [props.solicitudItem]);
+    }, [props.solicitudItem, props.open]);
 
     const verImagenCotizacion = (index, archivo) => {
         const tipoMime = archivo.archivo_cotizacion.split(';')[0].split(':')[1]; // extrae el tipo MIME

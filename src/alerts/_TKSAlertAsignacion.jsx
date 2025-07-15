@@ -20,15 +20,17 @@ const AlertaAsignacion = (props) => {
     })//### **
 
     useEffect(() => {
-        if (props.solicitudItem != undefined) {
-            GetListUsuarios()
-            setAsigUsuario({
-                ..._AsigUsuario,
-                id_solicitud: props.solicitudItem.id,
-                id_usuario: props.solicitudItem.id_usuario_asignacion
-            });
+        if (props.open === true) {
+            if (props.solicitudItem != undefined) {
+                GetListUsuarios()
+                setAsigUsuario({
+                    ..._AsigUsuario,
+                    id_solicitud: props.solicitudItem.id,
+                    id_usuario: props.solicitudItem.id_usuario_asignacion
+                });
+            }
         }
-    }, [props.solicitudItem]);
+    }, [props.solicitudItem, props.open]);
 
     const handleLimpiar = () => {
         setAsigUsuario({

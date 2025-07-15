@@ -42,15 +42,17 @@ const AlertaObservaciones = (props) => {
   }); //### **
 
   useEffect(() => {
-    if (props.solicitudItem != undefined) {
-      setArray({
-        ..._Array,
-        id_solicitud: props.solicitudItem.id,
-        id_usuario: user.idUsuario,
-        observacion: "",
-      }); //### **
+    if (props.open === true) {
+      if (props.solicitudItem != undefined) {
+        setArray({
+          ..._Array,
+          id_solicitud: props.solicitudItem.id,
+          id_usuario: user.idUsuario,
+          observacion: "",
+        }); //### **
+      }
     }
-  }, [props.solicitudItem]);
+  }, [props.solicitudItem, props.open]);
 
 
 
