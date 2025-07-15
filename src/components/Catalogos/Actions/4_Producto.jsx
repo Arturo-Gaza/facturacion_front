@@ -83,7 +83,6 @@ const Afectacion = (props) => {
       .getToken(GET_CAT_BY_TIPO + id) //### **
       .then((response) => {
         setListOptions4(response.data.data);
-        setChecked(response.data.data.habilitado);
       }).catch((error) => {
         error.response.data.errors.forEach(element => {  //forEach Ya quedo
           props.props.props.setMessageSnackBar(element, 'warning');
