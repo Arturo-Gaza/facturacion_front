@@ -812,7 +812,7 @@ const DetalleSolicitud = (props) => {
     }
 
     const cambioEstatus = () => {
-        if (props.estatusSolicitud === 7) {
+        if (props.estatusSolicitud === 7 || props.estatusSolicitud === 10) {
             props.setEstatusSolicitud(0);
             const estatus = {
                 id_estatus: 8,
@@ -1034,7 +1034,7 @@ const DetalleSolicitud = (props) => {
         <div>
             <Grid container alignItems="center" justifyContent="space-between" sx={{ padding: 2 }}>
                 <Grid item>
-                    {props.estatusSolicitud === 7 ? (
+                    {![7, 10].includes(props.estatusSolicitud) ? (null) : (
                         <Button
                             variant="outlined"
                             component="label"
@@ -1042,10 +1042,10 @@ const DetalleSolicitud = (props) => {
                             onClick={BtnCotizar}
                             sx={{ backgroundColor: '#97d95c', color: '#000', '&:hover': { backgroundColor: '#85c850' } }}
                         >Empezar cotización</Button>
-                    ) : (null)}
+                    )}
                 </Grid>
                 <Grid item>
-                    {props.estatusSolicitud != 7 ? (
+                    {[7, 10].includes(props.estatusSolicitud) ? (null) : (
                         <FormControl sx={{ minWidth: 220 }} size="small">
                             <InputLabel id="cotizacion-select-label">Tipo de Cotización</InputLabel>
                             <Select
@@ -1059,7 +1059,7 @@ const DetalleSolicitud = (props) => {
                                 <MenuItem value="articulo">Cotización General</MenuItem>
                             </Select>
                         </FormControl>
-                    ) : (null)}
+                    )}
                 </Grid>
             </Grid>
             <Box
@@ -1083,12 +1083,13 @@ const DetalleSolicitud = (props) => {
                             <StyledTableCell align={'center'}><label className='textLabel3'>Modelo</label></StyledTableCell>
                             <StyledTableCell align={'center'}><label className='textLabel3'>Observación</label></StyledTableCell>
                             <StyledTableCell align={'center'}><label className='textLabel3'>Fecha de creación</label></StyledTableCell>
-                            {cotizacionGeneral != true && props.estatusSolicitud != 7 ? (
+                            {[7, 10].includes(props.estatusSolicitud) ? (null) : (cotizacionGeneral != true ? (
                                 <StyledTableCell align={'center'}><label className='textLabel3'>Estatus Cotizado</label></StyledTableCell>
-                            ) : (null)}
-                            {props.estatusSolicitud != 7 ? (
+                            ) : (null)
+                            )}
+                            {[7, 10].includes(props.estatusSolicitud) ? (null) : (
                                 <StyledTableCell align={'center'}><label className='textLabel3'>Acción</label></StyledTableCell>
-                            ) : (null)}
+                            )}
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -1102,10 +1103,10 @@ const DetalleSolicitud = (props) => {
                                 <StyledTableCell align={'center'}><label className='textLabel4'>{row.modelo}</label></StyledTableCell>
                                 <StyledTableCell align={'center'}><Box sx={{ textAlign: 'justify' }}><label className='textLabel4'>{typeof row.observacion === 'string' ? row.observacion.length > 300 ? row.observacion.substring(0, 300) + '...' : row.observacion : ''}</label></Box></StyledTableCell>
                                 <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.created_at}</label></StyledTableCell>
-                                {cotizacionGeneral != true && props.estatusSolicitud != 7 ? (
+                                {[7, 10].includes(props.estatusSolicitud) ? (null) : (cotizacionGeneral != true ? (
                                     <StyledTableCell align={'center'} sx={{ whiteSpace: 'nowrap' }}><label className='textLabel4'>{row.cotizado == null ? 'Sin revisión' : row.cotizado ? 'Cotizado' : 'Con observaciones'}</label></StyledTableCell>
-                                ) : (null)}
-                                {props.estatusSolicitud != 7 ? (
+                                ) : (null))}
+                                {[7, 10].includes(props.estatusSolicitud) ? (null) : (
                                     <StyledTableCell>
                                         <IconButton
                                             onClick={() => editarDetalle(row, i)}
@@ -1113,13 +1114,13 @@ const DetalleSolicitud = (props) => {
                                             <FindInPageIcon sx={{ color: "#0066CC" }} />
                                         </IconButton>
                                     </StyledTableCell>
-                                ) : (null)}
+                                )}
                             </StyledTableRow>
                         ))}
                     </TableBody>
                 </Table>
             </Box>
-            {props.estatusSolicitud != 7 ? (
+            {[7, 10].includes(props.estatusSolicitud) ? (null) : (
                 <>
                     <Box
                         sx={{
@@ -1590,7 +1591,7 @@ const DetalleSolicitud = (props) => {
                         </>
                     ) : null}
                 </>
-            ) : (null)}
+            )}
             <center>
                 <Grid container sx={{ marginTop: 1 }} justifyContent="center">
                     <Button
@@ -1603,8 +1604,8 @@ const DetalleSolicitud = (props) => {
                     </Button>
                     {cotizacionGeneral == true ? (
                         <Button
-                            disabled={props.estatusSolicitud === 7 ? true : false}
-                            className={props.estatusSolicitud === 7 ? "btn-aceptar-disabled" : "btn-aceptar"}
+                            disabled={[7, 10].includes(props.estatusSolicitud) ? true : false}
+                            className={[7, 10].includes(props.estatusSolicitud) ? "btn-aceptar-disabled" : "btn-aceptar"}
                             onClick={() => EnviarCotizacion(2)}
                             variant={"contained"}
                         >
@@ -1612,8 +1613,8 @@ const DetalleSolicitud = (props) => {
                         </Button>
                     ) : (
                         <Button
-                            disabled={props.estatusSolicitud === 7 ? true : false}
-                            className={props.estatusSolicitud === 7 ? "btn-aceptar-disabled" : "btn-aceptar"}
+                            disabled={[7, 10].includes(props.estatusSolicitud) ? true : false}
+                            className={[7, 10].includes(props.estatusSolicitud) ? "btn-aceptar-disabled" : "btn-aceptar"}
                             onClick={() => EnviarCotizacion(1)}
                             variant={"contained"}
                         >

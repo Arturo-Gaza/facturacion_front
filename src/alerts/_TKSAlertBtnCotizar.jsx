@@ -13,6 +13,7 @@ const AlertBtnCotizar = (props) => {
   const Continuar = async () => {
     props.cambioEstatus();
     props.close(false);
+    props.props.setEstatusSolicitud(8)
   };
 
   const Cancelar = () => {
