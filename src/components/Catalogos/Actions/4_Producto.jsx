@@ -176,7 +176,7 @@ const Afectacion = (props) => {
       .then((response) => {
         setArrayCatalogo(response.data.data);
         setChecked(response.data.data.habilitado);
-        //return GetArrayCatalogoByID2(response.data.data.id_tipo);
+        return GetArrayCatalogoByID2(response.data.data.id_tipo);
       }).catch((error) => {
         error.response.data.errors.forEach(element => {  //forEach Ya quedo
           props.props.props.setMessageSnackBar(element, 'warning');
