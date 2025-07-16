@@ -69,7 +69,6 @@ const AlertCotizacionSolicitudConsola = (props) => {
         if (tipoMime && (tipoMime.startsWith('image') || tipoMime === 'application/pdf')) {
             return base64ToBlobUrl(archivo_cotizacion, tipoMime);
         }
-        props.props.props.setCloseLoadingScreen();
         return null;
     }, [cotizacionSeleccionado]);
 
@@ -80,6 +79,12 @@ const AlertCotizacionSolicitudConsola = (props) => {
             }
         };
     }, [archivoUrl]);
+
+    useEffect(() => {
+        if (tablaCotizacion.length > 0) {
+            props.props.props.setCloseLoadingScreen();
+        }
+    }, [tablaCotizacion]);
 
 
     return (
