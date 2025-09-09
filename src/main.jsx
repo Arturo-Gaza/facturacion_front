@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserContenidoProvider } from './hooks/UserConteProvider';
 import { StepProvider } from './hooks/StepProvider';
 import { SnackbarProvider } from 'notistack';
-
+import { GoogleOAuthProvider } from '@react-oauth/google'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
@@ -15,7 +15,9 @@ root.render(
     <StepProvider>
       <UserContenidoProvider>
         <SnackbarProvider maxSnack={5}>
+           <GoogleOAuthProvider clientId="1049009189572-8gd1eak8631mc8pohdug8e8nb85t4t63.apps.googleusercontent.com">
           <App />
+          </GoogleOAuthProvider>
         </SnackbarProvider>
       </UserContenidoProvider>
     </StepProvider>
