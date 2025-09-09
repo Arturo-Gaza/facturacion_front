@@ -33,6 +33,7 @@ import { useUserContenidoContext } from '../../hooks/UserConteProvider';
 import GoogleLoginButton from '../../components/GoogleLoginButton';
 
 import GoogleButton from '../../components/GoogleButton';
+import CountryPhoneSelectors from '../../components/CountryPhoneSelectors'
 
 
 const theme = createTheme();
@@ -203,6 +204,7 @@ const SignInSide = (props) => {
                       {formik.touched.email && formik.errors.email}
                     </a>
                   </div>
+
                   <div>
                     <label className='labelLogin'>Contraseña</label>
                     <TextFailedLogin
@@ -274,8 +276,10 @@ const SignInSide = (props) => {
       onStart={() => props.setOpenLoadingScreen?.()}
     />
                     </center>
+                                      <CountryPhoneSelectors></CountryPhoneSelectors>
                   </Grid>
-                  <br></br>
+                  <br>
+                  </br>
                 </Box>
               </Box>
             </Grid>
