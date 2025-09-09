@@ -30,6 +30,10 @@ import { FooterLayout } from '../../Layouts/Login/FooterLayout';
 import HeaderLayout from '../../Layouts/Login/HeaderLayout';
 import AlertCambiarContraseña from '../../alerts/AlertCambiarContraseña';
 import { useUserContenidoContext } from '../../hooks/UserConteProvider';
+import GoogleLoginButton from '../../components/GoogleLoginButton';
+
+import GoogleButton from '../../components/GoogleButton';
+
 
 const theme = createTheme();
 
@@ -112,7 +116,39 @@ const SignInSide = (props) => {
   };
 
   useEffect(() => {
-  }, []);
+ const handleMessage = (event) => {
+  console.log("entra aqui")
+  console.log(event.origin)
+    console.log(window.location.origin)
+
+      if (event.data?.status) {
+        const data = event.data;
+
+        // Guardar en sessionStorage
+        sessionStorage.setItem("sesion", true);
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("idUsuario", data.user.id);
+        sessionStorage.setItem("user", data.user.user);
+        sessionStorage.setItem("nombre", data.user.name + " " + data.user.apellidoP + " " + data.user.apellidoM);
+        sessionStorage.setItem("idRol", data.user.idRol);
+        sessionStorage.setItem("nameRol", data.user.descripcion_rol);
+        sessionStorage.setItem("email", data.user.email);
+        sessionStorage.setItem("departameto", data.user.descripcio_depatamento);
+        sessionStorage.setItem("idDepartamento", data.user.id_departamento);
+
+        // Cerrar loader y redirigir
+        props.setCloseLoadingScreen();
+        window.location.assign(SOLICITUD); // 🚀 tu ruta de Home
+      } else if (event.data?.error) {
+        console.error("Error Google:", event.data.error);
+        props.setCloseLoadingScreen();
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+
+  }, [props]);
   return (
     <div>
 
@@ -142,6 +178,8 @@ const SignInSide = (props) => {
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                   <LockOutlinedIcon sx={{ color: '#ffffff' }} />
                 </Avatar>
+  
+
                 <Typography component="h1" variant="h6">
                   Iniciar sesión
                 </Typography>
@@ -205,6 +243,7 @@ const SignInSide = (props) => {
                     </a>
                   </div>
                   <br></br>
+               
                   <Grid className='margin2'>
                     <center>
                       <Button
@@ -215,6 +254,7 @@ const SignInSide = (props) => {
                       >
                         Acceder
                       </Button>
+                      
                       <p className="texto-cambio-contraseña">
                         ¿Olvidaste tu contraseña?{" "}
                         <a
@@ -227,6 +267,12 @@ const SignInSide = (props) => {
                           Cambiar aquí
                         </a>
                       </p>
+                       <GoogleButton
+      href="http://127.0.0.1:8000/auth/google"
+      text="Iniciar sesión con Google"
+      variant="contained"
+      onStart={() => props.setOpenLoadingScreen?.()}
+    />
                     </center>
                   </Grid>
                   <br></br>
@@ -258,23 +304,3 @@ const SignInSide = (props) => {
 export default SignInSide
 
 
-// var token = sessionStorage.getItem("token");
-// await axios
-//   .get('http://localhost:8000/api/employees', { headers: { "Authorization": `Bearer ${token}` } })
-//   .then((response) =>
-//   )
-//   .catch(error => {
-//     throw error
-//   })
-
-
-
-
-// await axios
-//   .post('http://localhost:8000/api/auth/login', data)
-//   .then((response) =>
-//     sessionStorage.setItem("token", response.data.token)
-//   )
-//   .catch(error => {
-//     throw error
-//   })
