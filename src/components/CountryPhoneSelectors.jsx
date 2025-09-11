@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Autocomplete, TextField, Box, Grid } from '@mui/material';
 import { TextFieldGeneral } from '../Styles/TextField/TextField';
 import axios from 'axios';
-
+import Button from '@mui/material/Button';
+import requests from '../components/AxiosCalls/AxiosCallsLocal';
+import { MANDAR_SMS } from '../Constants/ApiConstants';
 const CountryPhoneSelectors = () => {
   const [_AsigPais, setAsigPais] = useState({
     code: 'MX',
@@ -23,7 +25,7 @@ const CountryPhoneSelectors = () => {
 
         const mapped = data.map((c) => {
           let dialCode = '';
-          
+
           if (c.idd?.root) {
             if (c.idd.suffixes && c.idd.suffixes.length === 1) {
               dialCode = `${c.idd.root}${c.idd.suffixes[0]}`;
@@ -58,11 +60,30 @@ const CountryPhoneSelectors = () => {
     }
     console.log('País seleccionado:', value);
   };
+  const onSMS = (value) => {
+    const data = {
+      numero: phoneNumber,
+      codigo: _AsigPais.dialCode,
+    }
+    console.log("Mensaje")
+    console.log(phoneNumber)
+    requests.postToken(MANDAR_SMS, data)
+      .then((response) => {
+
+
+      })
+      .catch((error) => {
+        console.log('VER MI ERRORS', error)
+        error.response.data.errors.forEach(element => {
+          props.setMessageSnackBar(element, 'warning');
+        });
+        props.setCloseLoadingScreen()
+      })
+  };
 
   const handlePhoneChange = (event) => {
     const value = event.target.value.replace(/[^0-9]/g, '');
     setPhoneNumber(value);
-    console.log('Número completo:', `${_AsigPais.dialCode}${value}`);
   };
 
   return (
@@ -96,7 +117,7 @@ const CountryPhoneSelectors = () => {
                 if (reason === 'input' || reason === 'clear') {
                   setInputValue(newInputValue);
                 } else if (reason === 'reset') {
-                  const selectedOption = countries.find(option => 
+                  const selectedOption = countries.find(option =>
                     `${option.flag} ${option.name} (${option.dialCode})` === newInputValue
                   );
                   if (selectedOption) {
@@ -125,8 +146,8 @@ const CountryPhoneSelectors = () => {
               placeholder="1234567890"
               InputProps={{
                 startAdornment: (
-                  <span style={{ 
-                    marginRight: '8px', 
+                  <span style={{
+                    marginRight: '8px',
                     color: '#666',
                     minWidth: '30px' // Ancho fijo para el código
                   }}>
@@ -161,8 +182,20 @@ const CountryPhoneSelectors = () => {
                 }
               }}
             />
+
           </Grid>
+
+
+
         </Grid>
+        <Button
+          onClick={onSMS}
+          fullWidth
+          variant="contained"
+          className='btn-aceptar'
+        >
+          Confirmar y mandar SMS
+        </Button>
       </Box>
 
 

@@ -246,3 +246,7 @@ export const CREATE_OBSERVACIONES_ARTICULOS_DETALLE = 'tabobservacionesSolicitud
 export const UPDATE_OBSERVACIONES_ARTICULOS_DETALLE = 'tabobservacionesSolicitudDetalle/update/'
 
 export const TABLA_REPORTE = 'tabSolicitudes/reporte'
+/*::::::::::::::::::::::::::::	Contacto	*/
+
+export const MANDAR_SMS = 'TabContacto/mandarSMS'
+

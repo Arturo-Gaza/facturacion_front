@@ -117,14 +117,11 @@ const SignInSide = (props) => {
   };
 
   useEffect(() => {
- const handleMessage = (event) => {
-  console.log("entra aqui")
-  console.log(event.origin)
-    console.log(window.location.origin)
+    const handleMessage = (event) => {
+
 
       if (event.data?.status) {
         const data = event.data;
-
         // Guardar en sessionStorage
         sessionStorage.setItem("sesion", true);
         sessionStorage.setItem("token", data.token);
@@ -179,7 +176,7 @@ const SignInSide = (props) => {
                 <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                   <LockOutlinedIcon sx={{ color: '#ffffff' }} />
                 </Avatar>
-  
+
 
                 <Typography component="h1" variant="h6">
                   Iniciar sesión
@@ -245,7 +242,7 @@ const SignInSide = (props) => {
                     </a>
                   </div>
                   <br></br>
-               
+
                   <Grid className='margin2'>
                     <center>
                       <Button
@@ -256,7 +253,7 @@ const SignInSide = (props) => {
                       >
                         Acceder
                       </Button>
-                      
+
                       <p className="texto-cambio-contraseña">
                         ¿Olvidaste tu contraseña?{" "}
                         <a
@@ -269,14 +266,14 @@ const SignInSide = (props) => {
                           Cambiar aquí
                         </a>
                       </p>
-                       <GoogleButton
-      href="http://127.0.0.1:8000/auth/google"
-      text="Iniciar sesión con Google"
-      variant="contained"
-      onStart={() => props.setOpenLoadingScreen?.()}
-    />
+                      <GoogleButton
+                        href="http://127.0.0.1:8000/auth/google"
+                        text="Iniciar sesión con Google"
+                        variant="contained"
+                        onStart={() => props.setOpenLoadingScreen?.()}
+                      />
                     </center>
-                                      <CountryPhoneSelectors></CountryPhoneSelectors>
+                    <CountryPhoneSelectors></CountryPhoneSelectors>
                   </Grid>
                   <br>
                   </br>
